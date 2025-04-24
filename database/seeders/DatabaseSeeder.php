@@ -24,39 +24,70 @@ class DatabaseSeeder extends Seeder
       ]);
     }
 
-    $admin = User::factory()->create([
+    $admin = Role::where('name', 'admin')->first();
+    $landlord = Role::where('name', 'landlord')->first();
+    $tenant = Role::where('name', 'tenant')->first();
+
+    User::factory()->create([
       'name' => 'Administrator',
       'email' => 'admin@example.com',
-      'role_id' => Role::where('name', 'admin')->first()->id,
+      'role_id' => $admin->id,
     ]);
 
-    $landord = Landlord::factory()->create([
+    Landlord::factory()->create([
       'user_id' => User::factory()->create([
         'name' => 'Landlord',
         'email' => 'landlord@example.com',
-        'role_id' => Role::where('name', 'landlord')->first()->id,
+        'role_id' => $landlord,
       ])->id,
     ]);
 
-    $tenant = Tenant::factory()->create([
+    Tenant::factory()->create([
       'user_id' => User::factory()->create([
         'name' => 'Tenant',
         'email' => 'tenant@example.com',
-        'role_id' => Role::where('name', 'tenant')->first()->id,
+        'role_id' => $tenant->id,
       ])->id,
     ]);
 
-    User::factory(10)->create([
-      'role_id' => Role::where('name', 'tenant')->first()->id,
+    User::factory()->count(20)->create([
+      'role_id' => $tenant->id,
     ]);
 
-    $property = Property::factory()->create([
-      'name' => 'Kos Testing',
-      'landlord_id' => $landord->id,
+    User::factory()->count(10)->create([
+      'role_id' => $landlord->id,
     ]);
 
-    Room::factory(2)->create([
-      'property_id' => $property->id,
-    ]);
+    $users = User::whereIn('role_id', [
+      $landlord->id,
+      $tenant->id
+    ])->get();
+
+    foreach ($users as $user) {
+      switch ($user->role_id) {
+        case $landlord->id:
+          Landlord::factory()->create(['user_id' => $user->id]);
+          break;
+
+        case $tenant->id:
+          Tenant::factory()->create(['user_id' => $user->id]);
+          break;
+      }
+    }
+
+    $landlords = Landlord::with('user')->get();
+    foreach ($landlords as $landlord) {
+      Property::factory()->count(rand(1, 3))->create([
+        'landlord_id' => $landlord->id,
+      ]);
+    }
+
+
+    $properties = Property::get();
+    foreach ($properties as $property) {
+      Room::factory()->count(rand(1, 3))->create([
+        'property_id' => $property->id,
+      ]);
+    }
   }
 }

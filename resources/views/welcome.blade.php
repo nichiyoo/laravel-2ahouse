@@ -1,25 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-landing-layout>
+  <div class="flex flex-col justify-center h-full gap-8 p-content">
+    <h1 class="basis-1/3">
+      <span class="block text-xl font-semibold">Selamat datang</span>
+      <span class="block text-5xl font-bold text-primary-500">{{ config('app.name') }}.</span>
+    </h1>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+    <div class="flex flex-col items-center gap-6 basis-1/3">
+      <img src={{ asset('images/logo.png') }} alt="Logo" class="w-full max-w-xs">
+      <p class="text-center">
+        Temukan Kos Pilihanmu
+      </p>
+    </div>
 
-<body>
-  <h1>Selamat datang</h1>
-  <span>{{ config('app.name') }}</span>
-
-  <p>Temukan Kos Pilihanmu</p>
-
-  <a href="{{ route('login') }}">
-    <button>Are you a user?</button>
-  </a>
-
-  <a href="{{ route('login') }}">
-    <button>Are you an owner?</button>
-  </a>
-</body>
-
-</html>
+    <div class="flex flex-col justify-end gap-2 basis-1/3">
+      <a href="{{ route('login') }}">
+        <x-ui.button variant="secondary">Are you a user?</x-ui.button>
+      </a>
+      <a href="{{ route('login') }}">
+        <x-ui.button variant="primary">Are you an owner?</x-ui.button>
+      </a>
+    </div>
+  </div>
+</x-landing-layout>

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Property extends Model
 {
@@ -36,8 +37,8 @@ class Property extends Model
    * @var array<string, string>
    */
   protected $casts = [
-    'latitude' => 'decimal:8',
-    'longitude' => 'decimal:8',
+    'latitude' => 'decimal:6',
+    'longitude' => 'decimal:6',
   ];
 
   /**
@@ -58,5 +59,25 @@ class Property extends Model
   public function rooms(): HasMany
   {
     return $this->hasMany(Room::class);
+  }
+
+  /**
+   * Get the reviews associated with the property.
+   *  
+   * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+   */
+  public function reviews(): HasManyThrough
+  {
+    return $this->hasManyThrough(Review::class, Room::class);
+  }
+
+  /**
+   * Get the rents associated with the property.
+   *  
+   * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+   */
+  public function rents(): HasManyThrough
+  {
+    return $this->hasManyThrough(Rent::class, Room::class);
   }
 }

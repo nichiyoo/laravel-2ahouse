@@ -17,14 +17,14 @@ class PropertyFactory extends Factory
   public function definition(): array
   {
     return [
-      'name' => fake()->word(),
+      'name' => 'Kos' . ' ' . fake()->streetName(),
       'address' => fake()->streetAddress(),
       'city' => fake()->city(),
       'region' => fake()->state(),
       'zipcode' => fake()->postcode(),
       'description' => fake()->paragraph(),
-      'latitude' => fake()->latitude(),
-      'longitude' => fake()->longitude(),
+      'latitude' => fake()->latitude($min = -6.2, $max = -6.1),
+      'longitude' => fake()->longitude($min = 106.7, $max = 106.9)
     ];
   }
 }

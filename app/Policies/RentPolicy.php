@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Media;
+use App\Models\Rent;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class MediaPolicy
+class RentPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class MediaPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Media $media): bool
+    public function view(User $user, Rent $rent): bool
     {
         return false;
     }
@@ -35,7 +35,7 @@ class MediaPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Media $media): bool
+    public function update(User $user, Rent $rent): bool
     {
         return false;
     }
@@ -43,7 +43,7 @@ class MediaPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Media $media): bool
+    public function delete(User $user, Rent $rent): bool
     {
         return false;
     }
@@ -51,7 +51,7 @@ class MediaPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Media $media): bool
+    public function restore(User $user, Rent $rent): bool
     {
         return false;
     }
@@ -59,7 +59,7 @@ class MediaPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Media $media): bool
+    public function forceDelete(User $user, Rent $rent): bool
     {
         return false;
     }

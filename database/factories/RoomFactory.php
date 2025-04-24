@@ -18,17 +18,15 @@ class RoomFactory extends Factory
    */
   public function definition(): array
   {
-    $price = fake()->numberBetween(100, 1000) * 1000;
-    $payments = array_map(fn(PaymentType $payment) => $payment->value, PaymentType::cases());
-    $ammenities = array_map(fn(AmenitiesType $amenity) => $amenity->value, AmenitiesType::cases());
+    $price = fake()->numberBetween(5, 30) * 100000;
 
     return [
-      'type' => fake()->word(),
+      'type' => fake()->regexify('Kamar Tipe [A-Z]{1}'),
       'capacity' => fake()->numberBetween(1, 10),
       'price' => $price,
       'images' => [],
-      'payment' => fake()->randomElement($payments),
-      'amenities' => fake()->randomElements($ammenities, fake()->numberBetween(3, 8)),
+      'payment' => fake()->randomElement(PaymentType::class),
+      'amenities' => fake()->randomElements(AmenitiesType::class, fake()->numberBetween(3, 8)),
     ];
   }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Room extends Model
 {
@@ -45,5 +46,35 @@ class Room extends Model
   public function property(): BelongsTo
   {
     return $this->belongsTo(Property::class);
+  }
+
+  /**
+   * Get the reviews associated with the room.
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function reviews(): HasMany
+  {
+    return $this->hasMany(Review::class);
+  }
+
+  /**
+   * Get the rents associated with the room.
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function rents(): HasMany
+  {
+    return $this->hasMany(Rent::class);
+  }
+
+  /**
+   * Get the bookmarks associated with the room.
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function bookmarks(): HasMany
+  {
+    return $this->hasMany(Bookmark::class);
   }
 }
