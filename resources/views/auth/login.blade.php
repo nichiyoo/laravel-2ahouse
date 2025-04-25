@@ -5,7 +5,7 @@
 
   <x-ui.status class="mb-4" :status="session('status')" />
 
-  <form method="POST" action="{{ route('login') }}" class="grid gap-6">
+  <form method="POST" action="{{ route('login') }}" class="grid gap-4">
     @csrf
     <div>
       <x-ui.label for="email" value="Email" />

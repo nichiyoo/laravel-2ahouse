@@ -15,7 +15,7 @@
     <div class="grid items-center h-full">
       <div class="flex flex-col gap-8 p-content">
         <a href="{{ route('welcome') }}">
-          <img src={{ asset('images/logo.png') }} alt="Logo" class="w-full mx-auto max-w-40">
+          <x-ui.logo class="mx-auto max-w-40" />
         </a>
 
         <div class="grid gap-8">

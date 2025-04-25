@@ -24,6 +24,7 @@ export default {
         content: '2rem'
       },
       colors: {
+        // primary: colors.rose,
         primary: {
           '50': '#fffbea',
           '100': '#fff2c5',

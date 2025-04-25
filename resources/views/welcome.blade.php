@@ -6,7 +6,7 @@
     </h1>
 
     <div class="flex flex-col items-center gap-6 basis-1/3">
-      <img src={{ asset('images/logo.png') }} alt="Logo" class="w-full max-w-xs">
+      <x-ui.logo class="max-w-xs mx-auto" />
       <p class="text-center">
         Temukan Kos Pilihanmu
       </p>

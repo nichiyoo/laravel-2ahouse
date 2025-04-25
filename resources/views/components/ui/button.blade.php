@@ -15,7 +15,7 @@
 <button
   {{ $attributes->merge([
       'type' => 'submit',
-      'class' => "w-full justify-center border rounded-xl px-8 py-4 text-sm font-medium {$class} flex items-center gap-2 focus:outline-none transition ease-in-out duration-150",
+      'class' => "w-full justify-center border rounded-xl px-6 py-3 text-sm font-medium {$class} flex items-center gap-2 focus:outline-none transition ease-in-out duration-150",
   ]) }}>
   {{ $slot }}
 </button>

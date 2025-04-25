@@ -1,5 +1,5 @@
 <x-guest-layout>
-  <form method="POST" action="{{ route('password.store') }}" class="grid gap-6">
+  <form method="POST" action="{{ route('password.store') }}" class="grid gap-4">
     @csrf
 
     <input type="hidden" name="token" value="{{ $request->route('token') }}">

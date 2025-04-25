@@ -6,7 +6,7 @@
   </x-ui.header>
 
 
-  <form method="POST" action="{{ route('password.confirm') }}" class="grid gap-6">
+  <form method="POST" action="{{ route('password.confirm') }}" class="grid gap-4">
     @csrf
 
     <div>

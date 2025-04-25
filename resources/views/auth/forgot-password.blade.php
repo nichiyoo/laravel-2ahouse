@@ -10,12 +10,13 @@
 
   <x-ui.status class="mb-4" :status="session('status')" />
 
-  <form method="POST" action="{{ route('password.email') }}" class="grid gap-6">
+  <form method="POST" action="{{ route('password.email') }}" class="grid gap-4">
     @csrf
 
     <div>
       <x-ui.label for="email" value="Email" />
-      <x-ui.input id="email" cltype="email" name="email" value="{{ old('email') }}" required autofocus />
+      <x-ui.input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+        placeholder="Enter your email" />
       @error('email')
         <x-ui.error :messages="$errors->get('email')" />
       @enderror
