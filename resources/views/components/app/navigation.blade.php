@@ -2,10 +2,9 @@
 <nav {{ $attributes->merge(['class' => 'w-full']) }}>
   <ul class="grid grid-cols-5 border-t border-zinc-200 bg-zinc-50">
     <li>
-      <a href="{{ route('dashboard') }}"
-        class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('dashboard')) text-primary-500 @endif">
-
-        @if (request()->routeIs('dashboard'))
+      <a href="{{ route('tenants.app') }}"
+        class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('tenants.app')) text-primary-500 @endif">
+        @if (request()->routeIs('tenants.app'))
           <svg viewBox="0 0 24 24" class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
             <path
               d="M20.0402 6.82165L14.2802 2.79165C12.7102 1.69165 10.3002 1.75165 8.79023 2.92165L3.78023 6.83165C2.78023 7.61165 1.99023 9.21165 1.99023 10.4716V17.3716C1.99023 19.9216 4.06023 22.0016 6.61023 22.0016H17.3902C19.9402 22.0016 22.0102 19.9316 22.0102 17.3816V10.6016C22.0102 9.25165 21.1402 7.59165 20.0402 6.82165Z"
@@ -26,15 +25,14 @@
               fill="current"></path>
           </svg>
         @endif
-
         <span>Home</span>
       </a>
     </li>
 
     <li>
-      <a href="{{ route('map') }}"
-        class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('map')) text-primary-500 @endif">
-        @if (request()->routeIs('map'))
+      <a href="{{ route('tenants.map') }}"
+        class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('tenants.map')) text-primary-500 @endif">
+        @if (request()->routeIs('tenants.map'))
           <svg viewBox="0 0 24 24" class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24"
             height="24">
             <path
@@ -67,9 +65,9 @@
     </li>
 
     <li>
-      <a href="{{ route('search') }}"
-        class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('search')) text-primary-500 @endif">
-        @if (request()->routeIs('search'))
+      <a href="{{ route('tenants.search') }}"
+        class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('tenants.search')) text-primary-500 @endif">
+        @if (request()->routeIs('tenants.search'))
           <svg viewBox="0 0 24 24" class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24"
             height="24">
             <path opacity="0.4"
@@ -96,9 +94,9 @@
     </li>
 
     <li>
-      <a href="{{ route('activity') }}"
-        class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('activity')) text-primary-500 @endif">
-        @if (request()->routeIs('activity'))
+      <a href="{{ route('tenants.activity') }}"
+        class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('tenants.activity')) text-primary-500 @endif">
+        @if (request()->routeIs('tenants.activity'))
           <svg viewBox="0 0 24 24" class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24"
             height="24">
             <path
@@ -139,7 +137,6 @@
     <li>
       <a href="{{ route('profile.edit') }}"
         class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('profile.edit')) text-primary-500 @endif">
-
         @if (request()->routeIs('profile.edit'))
           <svg viewBox="0 0 24 24" class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24"
             height="24">
@@ -162,7 +159,6 @@
               fill="current"></path>
           </svg>
         @endif
-
         <span>Profile</span>
       </a>
     </li>

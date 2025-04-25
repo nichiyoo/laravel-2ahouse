@@ -11,14 +11,16 @@
 </head>
 
 <body class="font-sans antialiased bg-zinc-100 text-zinc-950">
-  <div class="container relative h-screen max-w-md overflow-y-auto border bg-zinc-100 border-x">
+  <div class="container relative h-screen max-w-md overflow-x-hidden bg-zinc-100 md:border-x">
 
     <main class="pb-20">
       {{ $slot }}
     </main>
 
-    <x-navigation class="fixed bottom-0 max-w-md" />
+    <x-app.navigation class="fixed bottom-0 max-w-md" />
   </div>
+
+  @stack('scripts')
 </body>
 
 </html>

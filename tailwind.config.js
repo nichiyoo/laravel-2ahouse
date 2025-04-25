@@ -39,6 +39,9 @@ export default {
           '950': '#481700',
         },
       },
+      aspectRatio: {
+        thumbnail: '3/2'
+      }
     },
   },
 

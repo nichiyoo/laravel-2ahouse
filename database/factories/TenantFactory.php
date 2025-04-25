@@ -18,6 +18,7 @@ class TenantFactory extends Factory
   {
     return [
       'phone' => fake()->phoneNumber(),
+      'address' => fake()->address(),
     ];
   }
 }

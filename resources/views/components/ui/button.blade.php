@@ -9,13 +9,13 @@
       'destructive' => 'border-red-500 bg-red-500 text-zinc-50 hover:bg-red-600',
   ];
 
-  $class = $classes[$variant] ?? $classes['primary'];
-@endphp
-
-<button
-  {{ $attributes->merge([
+  $class = $classes[$variant];
+  $props = $attributes->merge([
       'type' => 'submit',
       'class' => "w-full justify-center border rounded-xl px-6 py-3 text-sm font-medium {$class} flex items-center gap-2 focus:outline-none transition ease-in-out duration-150",
-  ]) }}>
+  ]);
+@endphp
+
+<button {{ $props }}>
   {{ $slot }}
 </button>

@@ -10,6 +10,10 @@
   * {
     scrollbar-width: none;
   }
+
+  input, textarea, select {
+    @apply placeholder:text-zinc-400;
+  }
   
   *::-webkit-scrollbar {
     display: none;

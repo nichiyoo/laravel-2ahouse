@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -79,5 +80,37 @@ class Property extends Model
   public function rents(): HasManyThrough
   {
     return $this->hasManyThrough(Rent::class, Room::class);
+  }
+
+  /**
+   * Scope to filter properties by the rooms availability.
+   *
+   * @param  \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public function scopeHasRooms(Builder $query): Builder
+  {
+    return $query->whereHas('rooms');
+  }
+
+  /**
+   * Getter for starting price of the property.
+   *
+   * @return float
+   */
+  public function getMinPriceAttribute(): float
+  {
+    return $this->rooms->min('price');
+  }
+
+  /**
+   * Getter for the average rating of the property.
+   *
+   * @return float
+   */
+  public function getRatingAttribute(): float
+  {
+    $rating =  $this->reviews->avg('rating');
+    return round($rating, 1);
   }
 }

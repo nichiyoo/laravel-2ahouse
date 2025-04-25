@@ -14,7 +14,7 @@
   <div class="container h-screen max-w-md overflow-y-auto border bg-zinc-50 border-x">
     <div class="grid items-center h-full">
       <div class="flex flex-col gap-8 p-content">
-        <a href="{{ route('welcome') }}">
+        <a href="{{ route('onboard') }}">
           <x-ui.logo class="mx-auto max-w-40" />
         </a>
 

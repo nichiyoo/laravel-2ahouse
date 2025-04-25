@@ -23,8 +23,11 @@ class PropertyFactory extends Factory
       'region' => fake()->state(),
       'zipcode' => fake()->postcode(),
       'description' => fake()->paragraph(),
+      'image' => asset('images/placeholders/property.jpg'),
       'latitude' => fake()->latitude($min = -6.2, $max = -6.1),
-      'longitude' => fake()->longitude($min = 106.7, $max = 106.9)
+      'longitude' => fake()->longitude($min = 106.7, $max = 106.9),
+      'created_at' => fake()->dateTimeBetween('-1 year'),
+      'updated_at' => fake()->dateTimeBetween('-1 year'),
     ];
   }
 }

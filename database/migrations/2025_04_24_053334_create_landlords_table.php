@@ -14,10 +14,11 @@ return new class extends Migration
     Schema::create('landlords', function (Blueprint $table) {
       $table->id();
       $table->timestamps();
-      $table->foreignId('user_id')->constrained()->onDelete('cascade');
       $table->string('phone')->nullable();
       $table->string('avatar')->nullable();
       $table->string('backdrop')->nullable();
+      $table->boolean('completed')->default(false);
+      $table->foreignId('user_id')->constrained()->onDelete('cascade');
     });
   }
 

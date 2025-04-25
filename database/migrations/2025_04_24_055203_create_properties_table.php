@@ -19,10 +19,10 @@ return new class extends Migration
       $table->string('city');
       $table->string('region');
       $table->string('zipcode');
-      $table->string('image')->nullable();
-      $table->text('description')->nullable();
-      $table->decimal('latitude', 10, 6)->nullable();
-      $table->decimal('longitude', 10, 6)->nullable();
+      $table->string('image');
+      $table->text('description');
+      $table->decimal('latitude', 10, 6);
+      $table->decimal('longitude', 10, 6);
       $table->foreignId('landlord_id')->constrained()->onDelete('cascade');
     });
   }

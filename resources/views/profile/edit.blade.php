@@ -9,6 +9,10 @@
     </div>
 
     <div class="p-8 bg-white content rounded-xl col-span-full">
+      @include('profile.partials.logout')
+    </div>
+
+    <div class="p-8 bg-white content rounded-xl col-span-full">
       @include('profile.partials.delete')
     </div>
   </div>

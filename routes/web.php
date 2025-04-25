@@ -1,19 +1,27 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TenantController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn() => view('welcome'))->name('welcome');
+Route::get('/', fn() => view('onboard'))->middleware('guest')->name('onboard');
 
 Route::middleware('auth')->group(function () {
-  Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
-  Route::get('/map', fn() => view('dashboard'))->name('map');
-  Route::get('/search', fn() => view('dashboard'))->name('search');
-  Route::get('/activity', fn() => view('dashboard'))->name('activity');
-
+  Route::get('/app', [AppController::class, 'index'])->name('dashboard');
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::middleware('auth')
+  ->as('tenants.')
+  ->prefix('tenants')
+  ->group(function () {
+    Route::get('/app', [TenantController::class, 'app'])->name('app');
+    Route::get('/map', [TenantController::class, 'index'])->name('map');
+    Route::get('/search', [TenantController::class, 'list'])->name('search');
+    Route::get('/activity', [TenantController::class, 'index'])->name('activity');
+  });
 
 require __DIR__ . '/auth.php';

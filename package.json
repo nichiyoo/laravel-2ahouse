@@ -18,6 +18,11 @@
     "vite": "^6.2.4"
   },
   "dependencies": {
-    "@fontsource/poppins": "^5.2.5"
+    "@fontsource/poppins": "^5.2.5",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-auto-scroll": "^8.6.0",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-class-names": "^8.6.0",
+    "lucide": "^0.503.0"
   }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Landlord;
 use App\Models\Property;
+use App\Models\Review;
 use App\Models\Role;
 use App\Models\Room;
 use App\Models\Tenant;
@@ -48,6 +49,7 @@ class DatabaseSeeder extends Seeder
         'email' => 'tenant@example.com',
         'role_id' => $tenant->id,
       ])->id,
+      'completed' => true,
     ]);
 
     User::factory()->count(20)->create([
@@ -87,6 +89,16 @@ class DatabaseSeeder extends Seeder
     foreach ($properties as $property) {
       Room::factory()->count(rand(1, 3))->create([
         'property_id' => $property->id,
+      ]);
+    }
+
+    $rooms = Room::get();
+    foreach ($rooms as $room) {
+      $tenant = Tenant::inRandomOrder()->first();
+
+      Review::factory()->count(rand(1, 3))->create([
+        'room_id' => $room->id,
+        'tenant_id' => $tenant->id,
       ]);
     }
   }
