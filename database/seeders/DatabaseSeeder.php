@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
     }
 
     $admin = Role::where('name', 'admin')->first();
-    $landlord = Role::where('name', 'landlord')->first();
     $tenant = Role::where('name', 'tenant')->first();
+    $landlord = Role::where('name', 'landlord')->first();
 
     User::factory()->create([
       'name' => 'Administrator',
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
       'user_id' => User::factory()->create([
         'name' => 'Landlord',
         'email' => 'landlord@example.com',
-        'role_id' => $landlord,
+        'role_id' => $landlord->id,
       ])->id,
     ]);
 
@@ -83,7 +83,6 @@ class DatabaseSeeder extends Seeder
         'landlord_id' => $landlord->id,
       ]);
     }
-
 
     $properties = Property::get();
     foreach ($properties as $property) {

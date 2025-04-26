@@ -18,7 +18,7 @@ class Bookmark extends Model
    */
   protected $fillable = [
     'tenant_id',
-    'room_id',
+    'property_id',
   ];
 
   /**
@@ -32,12 +32,12 @@ class Bookmark extends Model
   }
 
   /**
-   * Get the room associated with the bookmark.
+   * Get the property associated with the bookmark.
    *
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
    */
-  public function room(): BelongsTo
+  public function property(): BelongsTo
   {
-    return $this->belongsTo(Room::class);
+    return $this->belongsTo(Property::class);
   }
 }

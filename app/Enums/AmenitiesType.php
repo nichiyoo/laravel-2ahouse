@@ -56,4 +56,25 @@ enum AmenitiesType: string
       self::SHOWER => 'Shower for bathing',
     };
   }
+
+  /**
+   * Get the icon for the amenities type.
+   *
+   * @return string
+   */
+  public function icon(): string
+  {
+    return match ($this) {
+      self::TV => 'tv',
+      self::WIFI => 'wifi',
+      self::PARKING => 'parking-circle',
+      self::WASHING_MACHINE => 'washing-machine',
+      self::AIR_CONDITIONER => 'air-vent',
+      self::REFRIGERATOR => 'refrigerator',
+      self::KITCHENETTE => 'cooking-pot',
+      self::BATHTUB => 'bath',
+      self::BALCONY => 'house',
+      self::SHOWER => 'shower-head',
+    };
+  }
 }

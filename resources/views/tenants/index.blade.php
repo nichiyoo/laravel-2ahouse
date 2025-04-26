@@ -1,7 +1,10 @@
 <x-app-layout>
   <div class="grid gap-6 py-content">
     <section class="px-content">
-      <x-app.location />
+      <x-app.title>
+        <x-slot:section>Your location</x-slot>
+        <x-slot:heading>{{ Auth::user()->tenant->address }}</x-slot>
+      </x-app.title>
     </section>
 
     <section class="px-content">
@@ -29,7 +32,7 @@
           Other properties
         </h2>
 
-        <a href="{{ route('tenants.search') }}" class="flex items-center gap-2 text-sm text-primary-500">
+        <a href="{{ route('tenants.properties.index') }}" class="flex items-center gap-2 text-sm text-primary-500">
           <span>Explore</span>
           <i data-lucide="arrow-up-right" class="size-4"></i>
         </a>

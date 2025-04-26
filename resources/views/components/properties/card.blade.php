@@ -8,26 +8,34 @@
   ]);
 @endphp
 
-<div {{ $props }}>
+<a href="{{ route('tenants.properties.show', $property) }}" {{ $props }}>
   <div class="w-full">
-    <div class="p-4">
-      <div class="flex items-center gap-2">
-        <x-ui.avatar name="{{ $property->landlord->user->name }}" />
-        <div class="flex flex-col text-sm">
-          <span class="font-medium">{{ $property->landlord->user->name }}</span>
-          <span class="text-zinc-500">Owner</span>
-        </div>
-      </div>
+    <div class="flex items-center justify-between gap-4 p-4">
+      <x-properties.detail.profile :user="$property->landlord->user" />
+
+      <form method="POST" action="{{ route('tenants.properties.bookmark', $property) }}">
+        @csrf
+        <button size="icon">
+          <i data-lucide="bookmark" class="size-5 @if ($property->bookmarked) fill-current @endif"></i>
+          <span class="sr-only">Bookmark</span>
+        </button>
+      </form>
     </div>
 
     <img src="{{ $property->image }}" alt="{{ $property->name }}" class="object-cover aspect-video size-full" />
 
-    <div class="p-6">
-      <div class="flex items-center justify-between font-medium">
-        <h3 class="truncate">{{ $property->name }}</h3>
-        <span class="text-primary-500">Rp {{ number_format($property->min_price) }}</span>
-      </div>
+    <div class="flex flex-col gap-2 p-6">
+      <h3 class="truncate">{{ $property->name }}</h3>
       <p class="text-sm truncate text-zinc-500">{{ $property->address }}</p>
+
+      <p class="flex items-center gap-2 text-primary-500">
+        <span>Rp {{ number_format($property->min_price) }}</span>
+        @if ($property->max_price !== $property->min_price)
+          <span>-</span>
+          <span>Rp {{ number_format($property->max_price) }}</span>
+        @endif
+      </p>
     </div>
+
   </div>
-</div>
+</a>

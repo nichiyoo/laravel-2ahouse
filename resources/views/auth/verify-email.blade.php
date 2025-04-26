@@ -1,7 +1,7 @@
 <x-guest-layout>
   <x-ui.header>
-    <x-slot name="title">Thanks for signing up!</x-slot>
-    <x-slot name="description">
+    <x-slot:title>Thanks for signing up!</x-slot>
+    <x-slot:description>
       Before getting started, could you verify your email address by clicking on the link we
       just emailed to you? If you didn&apos;t receive the email, we will gladly send you another.
     </x-slot>

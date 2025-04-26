@@ -1,7 +1,7 @@
 <x-guest-layout>
   <x-ui.header>
-    <x-slot name="title">Confirm Password</x-slot>
-    <x-slot name="description"> This is a secure area of the application. Please confirm your password before
+    <x-slot:title>Confirm Password</x-slot>
+    <x-slot:description> This is a secure area of the application. Please confirm your password before
       continuing.</x-slot>
   </x-ui.header>
 

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class Property extends Model
 {
@@ -42,6 +44,7 @@ class Property extends Model
     'longitude' => 'decimal:6',
   ];
 
+
   /**
    * Get the landlord associated with the property.
    *
@@ -73,24 +76,51 @@ class Property extends Model
   }
 
   /**
-   * Get the rents associated with the property.
+   * Get the contracts associated with the property.
    *  
    * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
    */
-  public function rents(): HasManyThrough
+  public function contracts(): HasManyThrough
   {
-    return $this->hasManyThrough(Rent::class, Room::class);
+    return $this->hasManyThrough(Contract::class, Room::class);
   }
 
   /**
-   * Scope to filter properties by the rooms availability.
+   * Get the bookmarks associated with the room.
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function bookmarks(): HasMany
+  {
+    return $this->hasMany(Bookmark::class);
+  }
+
+  /**
+   * Get the bookmarks associated with the room.
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function saves(): HasMany
+  {
+    $user = Auth::user();
+    if (!$user) return $this->hasMany(Bookmark::class);
+    if ($user->role->name !== 'tenant') return $this->hasMany(Bookmark::class);
+
+    return $this->hasMany(Bookmark::class)
+      ->where('tenant_id', $user->tenant->id);
+  }
+
+  /**
+   * Scope to filter properties that have available rooms (capacity > 0).
    *
    * @param  \Illuminate\Database\Eloquent\Builder  $query
    * @return \Illuminate\Database\Eloquent\Builder
    */
   public function scopeHasRooms(Builder $query): Builder
   {
-    return $query->whereHas('rooms');
+    return $query->whereHas('rooms', function ($query) {
+      $query->where('capacity', '>', 0);
+    });
   }
 
   /**
@@ -104,6 +134,16 @@ class Property extends Model
   }
 
   /**
+   * Getter for the maximum price of the property.
+   *
+   * @return float
+   */
+  public function getMaxPriceAttribute(): float
+  {
+    return $this->rooms->max('price');
+  }
+
+  /**
    * Getter for the average rating of the property.
    *
    * @return float
@@ -112,5 +152,28 @@ class Property extends Model
   {
     $rating =  $this->reviews->avg('rating');
     return round($rating, 1);
+  }
+
+
+  /**
+   * Getter for the ammenities of the property.
+   *
+   * @return \Illuminate\Support\Collection
+   */
+  public function getAmenitiesAttribute(): Collection
+  {
+    return $this->rooms->pluck('amenities')->collapse()->unique();
+  }
+
+  /**
+   * Getter for the bookmarked property.
+   *
+   * @return bool
+   */
+  public function getBookmarkedAttribute(): bool
+  {
+    return $this->relationLoaded('saves')
+      ? $this->saves->isNotEmpty()
+      : false;
   }
 }

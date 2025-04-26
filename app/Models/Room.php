@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\AmenitiesType;
+use App\Enums\PaymentType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -28,15 +31,19 @@ class Room extends Model
   ];
 
   /**
-   * The attributes that should be cast to native types.
+   * Get the attributes that should be cast.
    *
-   * @var array<string, string>
+   * @return array<string, string>
    */
-  protected $casts = [
-    'price' => 'decimal:2',
-    'images' => 'array',
-    'amenities' => 'array',
-  ];
+  protected function casts(): array
+  {
+    return [
+      'price' => 'decimal:2',
+      'images' => 'array',
+      'payment' => PaymentType::class,
+      'amenities' => AsEnumCollection::of(AmenitiesType::class),
+    ];
+  }
 
   /**
    * Get the property associated with the room.
@@ -59,22 +66,23 @@ class Room extends Model
   }
 
   /**
-   * Get the rents associated with the room.
+   * Get the contracts associated with the room.
    *
    * @return \Illuminate\Database\Eloquent\Relations\HasMany
    */
-  public function rents(): HasMany
+  public function contracts(): HasMany
   {
-    return $this->hasMany(Rent::class);
+    return $this->hasMany(Contract::class);
   }
 
   /**
-   * Get the bookmarks associated with the room.
+   * Getter for the average rating of the property.
    *
-   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   * @return float
    */
-  public function bookmarks(): HasMany
+  public function getRatingAttribute(): float
   {
-    return $this->hasMany(Bookmark::class);
+    $rating =  $this->reviews->avg('rating');
+    return round($rating, 1);
   }
 }

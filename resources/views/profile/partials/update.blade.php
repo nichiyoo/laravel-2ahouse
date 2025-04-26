@@ -1,9 +1,9 @@
 <section>
   <x-ui.header>
-    <x-slot name="title">
+    <x-slot:title>
       Profile Information
     </x-slot>
-    <x-slot name="description">
+    <x-slot:description>
       Update your account&apos;s profile information and email address.
     </x-slot>
   </x-ui.header>

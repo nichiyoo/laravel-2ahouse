@@ -1,6 +1,6 @@
 <x-guest-layout>
   <x-ui.header>
-    <x-slot name="title">Log in to your account</x-slot>
+    <x-slot:title>Log in to your account</x-slot>
   </x-ui.header>
 
   <x-ui.status class="mb-4" :status="session('status')" />

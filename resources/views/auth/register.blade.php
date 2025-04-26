@@ -1,6 +1,6 @@
 <x-guest-layout>
   <x-ui.header>
-    <x-slot name="title">Welcome to {{ config('app.name') }}</x-slot>
+    <x-slot:title>Welcome to {{ config('app.name') }}</x-slot>
   </x-ui.header>
 
   <form method="POST" action="{{ route('register') }}" class="grid gap-4">

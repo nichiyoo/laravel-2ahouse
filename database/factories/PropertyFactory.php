@@ -22,7 +22,7 @@ class PropertyFactory extends Factory
       'city' => fake()->city(),
       'region' => fake()->state(),
       'zipcode' => fake()->postcode(),
-      'description' => fake()->paragraph(),
+      'description' => fake()->paragraphs(3, true),
       'image' => asset('images/placeholders/property.jpg'),
       'latitude' => fake()->latitude($min = -6.2, $max = -6.1),
       'longitude' => fake()->longitude($min = 106.7, $max = 106.9),

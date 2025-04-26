@@ -44,13 +44,13 @@ class Tenant extends Model
   }
 
   /**
-   * Get the rents associated with the tenant.
+   * Get the contracts associated with the tenant.
    *
    * @return \Illuminate\Database\Eloquent\Relations\HasMany
    */
-  public function rents(): HasMany
+  public function contracts(): HasMany
   {
-    return $this->hasMany(Rent::class);
+    return $this->hasMany(Contract::class);
   }
 
   /**

@@ -1,7 +1,7 @@
 <section class="space-y-6">
   <x-ui.header>
-    <x-slot name="title"> Sign Out </x-slot>
-    <x-slot name="description">
+    <x-slot:title> Sign Out </x-slot>
+    <x-slot:description>
       Signing out will also clear your remember me token.
     </x-slot>
 

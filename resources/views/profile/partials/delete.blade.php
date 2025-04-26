@@ -1,8 +1,8 @@
 <section class="space-y-6">
   <x-ui.header>
-    <x-slot name="title"> Delete Account
+    <x-slot:title> Delete Account
     </x-slot>
-    <x-slot name="description">
+    <x-slot:description>
       Once your account is deleted, all of its resources and data will be permanently deleted.
     </x-slot>
   </x-ui.header>
@@ -18,9 +18,9 @@
       @method('delete')
 
       <x-ui.header>
-        <x-slot name="title"> Delete Account
+        <x-slot:title> Delete Account
         </x-slot>
-        <x-slot name="description">
+        <x-slot:description>
           Once your account is deleted, all of its resources and data will be permanently deleted.
         </x-slot>
       </x-ui.header>

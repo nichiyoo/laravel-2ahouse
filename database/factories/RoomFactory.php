@@ -24,7 +24,11 @@ class RoomFactory extends Factory
       'type' => fake()->regexify('Kamar Tipe [A-Z]{1}'),
       'capacity' => fake()->numberBetween(1, 10),
       'price' => $price,
-      'images' => [],
+      'images' => [
+        asset('images/placeholders/rooms/rooms-1.jpg'),
+        asset('images/placeholders/rooms/rooms-2.jpg'),
+        asset('images/placeholders/rooms/rooms-3.jpg'),
+      ],
       'payment' => fake()->randomElement(PaymentType::class),
       'amenities' => fake()->randomElements(AmenitiesType::class, fake()->numberBetween(3, 8)),
     ];

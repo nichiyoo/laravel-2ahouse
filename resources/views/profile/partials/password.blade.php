@@ -1,9 +1,9 @@
 <section>
   <x-ui.header>
-    <x-slot name="title">
+    <x-slot:title>
       Update Password
     </x-slot>
-    <x-slot name="description">
+    <x-slot:description>
       Ensure your account is using a long, random password to stay secure.
     </x-slot>
   </x-ui.header>

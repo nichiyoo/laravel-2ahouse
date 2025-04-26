@@ -3,64 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bookmark;
-use App\Http\Requests\StoreBookmarkRequest;
-use App\Http\Requests\UpdateBookmarkRequest;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class BookmarkController extends Controller
 {
   /**
-   * Display a listing of the resource.
+   * Display the user's bookmarks.
+   * 
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\View\View
    */
-  public function index()
+  public function index(): View
   {
-    //
-  }
+    $user = Auth::user();
+    $tenant = $user->tenant;
 
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
-    //
-  }
+    $properties = Bookmark::with('property')
+      ->where('tenant_id', $tenant->id)
+      ->get()
+      ->pluck('property')
+      ->map(fn($property) => $property->load('landlord.user', 'rooms.reviews', 'saves'));
 
-  /**
-   * Store a newly created resource in storage.
-   */
-  public function store(StoreBookmarkRequest $request)
-  {
-    //
-  }
-
-  /**
-   * Display the specified resource.
-   */
-  public function show(Bookmark $bookmark)
-  {
-    //
-  }
-
-  /**
-   * Show the form for editing the specified resource.
-   */
-  public function edit(Bookmark $bookmark)
-  {
-    //
-  }
-
-  /**
-   * Update the specified resource in storage.
-   */
-  public function update(UpdateBookmarkRequest $request, Bookmark $bookmark)
-  {
-    //
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   */
-  public function destroy(Bookmark $bookmark)
-  {
-    //
+    return view('tenants.bookmarks.index', [
+      'properties' => $properties,
+    ]);
   }
 }

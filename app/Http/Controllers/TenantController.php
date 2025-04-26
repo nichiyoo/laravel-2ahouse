@@ -45,7 +45,7 @@ class TenantController extends Controller
     ];
 
     $others = Property::hasRooms()
-      ->with(['rooms', 'landlord.user'])
+      ->with(['rooms', 'landlord.user', 'saves'])
       ->whereNotIn('id', $combined)
       ->take(8)
       ->get();
@@ -58,33 +58,23 @@ class TenantController extends Controller
   }
 
   /**
-   * Display list of properties.
+   * Display the configuration page.
    * 
-   * @return \Illuminate\View\View
+   * @return \Illuminate\Contracts\View\View
    */
-  public function list(Request $request): View
+  public function config()
   {
-    $keyword = $request->get('query');
+    return view('tenants.config');
+  }
 
-    $properties = Property::hasRooms()
-      ->with(['rooms', 'landlord.user'])
-      ->when(
-        $keyword,
-        function ($query) use ($keyword) {
-          return $query
-            ->where('name', 'like', '%' . $keyword . '%')
-            ->orWhere('city', 'like', '%' . $keyword . '%')
-            ->orWhere('region', 'like', '%' . $keyword . '%')
-            ->orWhere('address', 'like', '%' . $keyword . '%')
-            ->orWhere('zipcode', 'like', '%' . $keyword . '%');
-        }
-      )
-      ->take(8)
-      ->get();
-
-    return view('tenants.properties.explore', [
-      'properties' => $properties,
-    ]);
+  /**
+   * Display the activity page.
+   * 
+   * @return \Illuminate\Contracts\View\View
+   */
+  public function activity()
+  {
+    return view('tenants.activity');
   }
 
   /**

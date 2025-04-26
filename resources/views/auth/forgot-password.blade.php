@@ -1,7 +1,7 @@
 <x-guest-layout>
   <x-ui.header>
-    <x-slot name="title">Forgot your password?</x-slot>
-    <x-slot name="description">
+    <x-slot:title>Forgot your password?</x-slot>
+    <x-slot:description>
       No problem. Just let us know your email address and we will email you a password reset
       link that will allow you to choose a new one.
     </x-slot>

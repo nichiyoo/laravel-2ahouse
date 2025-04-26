@@ -28,4 +28,12 @@
   .content {
     @apply bg-zinc-50 border border-zinc-200;
   }
+
+  .range-thumb::-webkit-slider-thumb {
+    @apply pointer-events-auto size-4 rounded-full bg-primary-500 appearance-none cursor-pointer;
+  }
+
+  .range-thumb::-moz-range-thumb {
+    @apply pointer-events-auto size-4 rounded-full bg-primary-500 appearance-none cursor-pointer;
+  }
 }
