@@ -12,11 +12,6 @@ use Illuminate\Http\Request;
 
 class TenantController extends Controller
 {
-  /**
-   * Display the main application page.
-   * 
-   * @return \Illuminate\Contracts\View\View
-   */
   public function app(): View | RedirectResponse
   {
     $user = Auth::user();
@@ -26,29 +21,19 @@ class TenantController extends Controller
       return redirect()->route('profile.edit');
     }
 
-    $nearest = Property::with(['rooms', 'reviews'])
+    $properties = Property::with(['rooms', 'reviews', 'landlord.user', 'saves'])
       ->hasRooms()
-      ->get()
-      ->sortBy('distance')
-      ->take(5)
-      ->values();
-
-    $latest = Property::with(['rooms'])
-      ->hasRooms()
-      ->latest('updated_at')
-      ->take(10)
       ->get();
+
+    $nearest = $properties->sortBy('distance')->take(5)->values();
+    $latest = $properties->sortByDesc('updated_at')->take(10)->values();
 
     $combinedIds = [
       ...$latest->pluck('id'),
       ...$nearest->pluck('id'),
     ];
 
-    $others = Property::with(['rooms', 'landlord.user', 'saves'])
-      ->hasRooms()
-      ->whereNotIn('id', $combinedIds)
-      ->take(8)
-      ->get();
+    $others = $properties->whereNotIn('id', $combinedIds)->take(8)->values();
 
     return view('tenants.index', [
       'nearest' => $nearest,
@@ -56,6 +41,7 @@ class TenantController extends Controller
       'others' => $others,
     ]);
   }
+
 
 
   /**

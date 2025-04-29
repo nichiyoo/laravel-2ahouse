@@ -34,7 +34,7 @@
               <div>
                 <x-ui.label for="rating" value="Minimum Rating" />
                 <x-ui.progress name="rating" min="0" max="5" step="1"
-                  value="{{ request()->get('rating', 10) }}" />
+                  value="{{ request()->get('rating', 0) }}" />
               </div>
 
               <div class="mt-4">

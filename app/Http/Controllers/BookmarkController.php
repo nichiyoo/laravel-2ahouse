@@ -19,7 +19,7 @@ class BookmarkController extends Controller
     $user = Auth::user();
     $tenant = $user->tenant;
 
-    $properties = Bookmark::with('property')
+    $properties = Bookmark::with('property.reviews',)
       ->where('tenant_id', $tenant->id)
       ->get()
       ->pluck('property')

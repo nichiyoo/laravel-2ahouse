@@ -28,10 +28,7 @@
             <span>{{ $property->rating }}</span>
           </div>
 
-          <div class="flex items-center gap-2">
-            <i data-lucide="clock" class="fill-current size-5"></i>
-            <span>{{ round($property->distance, 1) }} Km</span>
-          </div>
+          <span>{{ round($property->distance, 1) }} Km</span>
         </div>
       </a>
     @endforeach

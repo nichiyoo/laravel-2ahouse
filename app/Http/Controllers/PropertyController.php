@@ -23,9 +23,10 @@ class PropertyController extends Controller
     $min = $request->get('price_min');
     $max = $request->get('price_max');
     $rating = $request->get('rating');
+    $distance = $request->get('distance');
 
     $properties = Property::hasRooms()
-      ->with(['rooms', 'landlord.user', 'saves'])
+      ->with(['rooms', 'reviews', 'landlord.user', 'saves'])
       ->when($keyword, function ($query) use ($keyword) {
         return $query->where(function ($q) use ($keyword) {
           $q->where('name', 'like', '%' . $keyword . '%')
@@ -40,11 +41,20 @@ class PropertyController extends Controller
           $queries->whereBetween('price', [$min, $max]);
         });
       })
-      ->when($rating, function ($query) use ($rating) {
-        return $query->where('rating', '>=', $rating);
+      ->get()
+      ->when($distance, function ($query) use ($distance) {
+        return $query->filter(function ($property) use ($distance) {
+          return $property->distance <= $distance;
+        });
       })
-      ->take(8)
-      ->get();
+      ->when($rating, function ($query) use ($rating) {
+        return $query->filter(function ($property) use ($rating) {
+          return $property->rating >= $rating;
+        });
+      })
+      ->take(12)
+      ->sortBy('distance')
+      ->values();
 
     return view('tenants.properties.index', [
       'properties' => $properties,

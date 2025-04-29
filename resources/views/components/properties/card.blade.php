@@ -24,8 +24,18 @@
 
     <div class="relative w-full aspect-video">
       <img src="{{ $property->image }}" alt="{{ $property->name }}" class="object-cover size-full" />
-      <div class="absolute top-0 right-0 px-2 py-1 m-4 text-xs font-medium bg-white rounded-full">
-        <span>{{ round($property->distance, 1) }} Km</span>
+
+      <div class="absolute top-0 right-0 w-full p-4 text-xs font-medium">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2 px-2 py-1 text-yellow-400 rounded-full bg-zinc-50">
+            <i data-lucide="star" class="fill-current size-4"></i>
+            <span>{{ $property->rating }}</span>
+          </div>
+
+          <div class="px-2 py-1 rounded-full bg-zinc-50">
+            <span>{{ round($property->distance, 1) }} Km</span>
+          </div>
+        </div>
       </div>
     </div>
 
