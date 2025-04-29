@@ -27,6 +27,8 @@
   </div>
 
   @push('scripts')
+    @vite(['resources/js/leaflet.js'])
+
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const property = @json($property);

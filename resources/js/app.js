@@ -1,7 +1,6 @@
 import './font';
 import './lucide';
 import './bootstrap';
-import './leaflet';
 
 import Alpine from 'alpinejs';
 import Embla from 'embla-carousel'

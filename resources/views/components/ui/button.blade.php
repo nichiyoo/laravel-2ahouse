@@ -5,7 +5,7 @@
 
 @php
   $classes = [
-      'primary' => 'border-primary-500 bg-primary-500 text-zinc-50 hover:bg-primary-600',
+      'primary' => 'border-primary-500 bg-primary-500 text-zinc-50 hover:bg-primary-600 hover:border-primary-600',
       'secondary' => 'border-zinc-200 bg-zinc-200 text-zinc-900 hover:bg-zinc-300',
       'destructive' => 'border-red-500 bg-red-500 text-zinc-50 hover:bg-red-600',
   ];

@@ -15,7 +15,7 @@
 
       <form method="POST" action="{{ route('tenants.properties.bookmark', $property) }}">
         @csrf
-        <button size="icon">
+        <button size="icon" class="@if ($property->bookmarked) text-primary-500 @endif">
           <i data-lucide="bookmark" class="size-5 @if ($property->bookmarked) fill-current @endif"></i>
           <span class="sr-only">Bookmark</span>
         </button>
