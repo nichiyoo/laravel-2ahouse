@@ -22,12 +22,16 @@
       </form>
     </div>
 
-    <img src="{{ $property->image }}" alt="{{ $property->name }}" class="object-cover aspect-video size-full" />
+    <div class="relative w-full aspect-video">
+      <img src="{{ $property->image }}" alt="{{ $property->name }}" class="object-cover size-full" />
+      <div class="absolute top-0 right-0 px-2 py-1 m-4 text-xs font-medium bg-white rounded-full">
+        <span>{{ round($property->distance, 1) }} Km</span>
+      </div>
+    </div>
 
-    <div class="flex flex-col gap-2 p-6">
+    <div class="flex flex-col gap-1 p-6">
       <h3 class="truncate">{{ $property->name }}</h3>
       <p class="text-sm truncate text-zinc-500">{{ $property->address }}</p>
-
       <p class="flex items-center gap-2 text-primary-500">
         <span>Rp {{ number_format($property->min_price) }}</span>
         @if ($property->max_price !== $property->min_price)

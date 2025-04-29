@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Distance;
 use App\Models\Property;
 use App\Models\Bookmark;
 use Illuminate\Http\RedirectResponse;
@@ -48,70 +49,6 @@ class PropertyController extends Controller
     return view('tenants.properties.index', [
       'properties' => $properties,
     ]);
-  }
-
-  /**
-   * Display a listing of the resource based on user location.
-   * 
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\View\View
-   */
-  public function area(Request $request)
-  {
-    $lat = $request->query('lat', -6.1744);
-    $lng = $request->query('lng', 106.8294);
-    $radius = $request->query('radius', 10);
-
-    $properties = collect();
-
-    if ($lat && $lng) {
-      $all = Property::whereNotNull('latitude')
-        ->whereNotNull('longitude')
-        ->get();
-
-      $properties = $all->filter(function ($property) use ($lat, $lng, $radius) {
-        $distance = $this->haversine($lat, $lng, $property->latitude, $property->longitude);
-        return $distance <= $radius;
-      })->values();
-    }
-
-
-    return view('tenants.properties.area', [
-      'properties' => $properties,
-      'lat' => $lat,
-      'lng' => $lng,
-    ]);
-  }
-
-  /**
-   * Function to calculate the distance between two points on the earth.
-   * 
-   * @param  float  $lat1
-   * @param  float  $lon1
-   * @param  float  $lat2
-   * @param  float  $lon2
-   * @param  float  $radius  The radius of the earth in kilometers.
-   * @return float
-   */
-  function haversine($lat1, $lon1, $lat2, $lon2, $radius = 6371)
-  {
-    $latFrom = deg2rad($lat1);
-    $lonFrom = deg2rad($lon1);
-    $latTo = deg2rad($lat2);
-    $lonTo = deg2rad($lon2);
-
-    $latDelta = $latTo - $latFrom;
-    $lonDelta = $lonTo - $lonFrom;
-
-    $sinLat = sin($latDelta / 2);
-    $sinLon = sin($lonDelta / 2);
-    $sinLatSq = pow($sinLat, 2);
-    $sinLonSq = pow($sinLon, 2);
-
-    $a = $sinLatSq + cos($latFrom) * cos($latTo) * $sinLonSq;
-    $angle = 2 * asin(sqrt($a));
-
-    return $angle * $radius;
   }
 
   /**

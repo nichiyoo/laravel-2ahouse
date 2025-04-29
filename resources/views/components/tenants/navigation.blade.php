@@ -35,9 +35,9 @@
     </li>
 
     <li>
-      <a href="{{ route('tenants.properties.area') }}"
-        class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('tenants.properties.area')) text-primary-500 @endif">
-        @if (request()->routeIs('tenants.properties.area'))
+      <a href="{{ route('tenants.area') }}"
+        class="p-4 relative flex flex-col items-center justify-center gap-2 text-sm @if (request()->routeIs('tenants.area')) text-primary-500 @endif">
+        @if (request()->routeIs('tenants.area'))
           <svg viewBox="0 0 24 24" class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24"
             height="24">
             <path

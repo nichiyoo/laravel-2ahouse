@@ -3,15 +3,21 @@
     'max' => 1000,
     'step' => 1,
     'name' => 'value',
-    'defaultValue' => null,
+    'value' => null,
 ])
 
 <div x-data="{
-    value: {{ request($name, $defaultValue ?? $min) }},
     minLimit: {{ $min }},
     maxLimit: {{ $max }},
+    value: null,
+    init() {
+        this.value = this.clamp({{ $value }}) || this.minLimit;
+    },
+    clamp(val) {
+        return Math.max(this.minLimit, Math.min(this.maxLimit, val));
+    },
     updateValue(e) {
-        this.value = Math.max(this.minLimit, Math.min(this.maxLimit, e.target.value));
+        this.value = this.clamp(e.target.value);
     },
     percent() {
         return ((this.value - this.minLimit) / (this.maxLimit - this.minLimit)) * 100;

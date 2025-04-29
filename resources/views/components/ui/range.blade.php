@@ -3,13 +3,22 @@
     'max' => 1000,
     'step' => 1,
     'name' => 'value',
+    'start' => null,
+    'end' => null,
 ])
 
 <div x-data="{
-    minValue: {{ request($name . '_min', $min) }},
-    maxValue: {{ request($name . '_max', $max) }},
     minLimit: {{ $min }},
     maxLimit: {{ $max }},
+    minValue: null,
+    maxValue: null,
+    init() {
+        this.minValue = this.clamp({{ $start }}) || this.minLimit;
+        this.maxValue = this.clamp({{ $end }}) || this.maxLimit;
+    },
+    clamp(val) {
+        return Math.max(this.minLimit, Math.min(this.maxLimit, val));
+    },
     updateMin(e) {
         this.minValue = Math.min(e.target.value, Math.min(this.maxLimit, this.maxValue - 1));
     },

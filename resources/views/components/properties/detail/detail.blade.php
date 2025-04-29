@@ -1,11 +1,15 @@
-<section class="relative grid gap-4 -mt-16 bg-zinc-50 rounded-t-3xl">
+<section class="relative grid -mt-16 bg-zinc-50 rounded-t-3xl">
   <div class="flex flex-col gap-2 py-6 p-content">
     <div class="flex flex-col">
       <span class="text-sm text-zinc-400">Detail</span>
       <h1 class="text-2xl font-semibold">
         {{ $property->name }}
       </h1>
-      <p class="truncate text-zinc-500">{{ $property->address }}</p>
+      <p class="truncate text-zinc-500">
+        <span> {{ $property->address }}</span>
+        <span> - </span>
+        <span> {{ round($property->distance, 1) }} Km</span>
+      </p>
     </div>
 
     <div class="flex items-center text-yellow-500">

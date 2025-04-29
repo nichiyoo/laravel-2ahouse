@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helper\Distance;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -175,5 +176,25 @@ class Property extends Model
     return $this->relationLoaded('saves')
       ? $this->saves->isNotEmpty()
       : false;
+  }
+
+  /**
+   * Getter for the distance property.
+   *
+   * @return float
+   */
+  public function getDistanceAttribute(): float | null
+  {
+    $user = Auth::user();
+    $tenant = $user->tenant;
+
+    if (!$tenant) return null;
+
+    return Distance::haversine(
+      $tenant->latitude,
+      $tenant->longitude,
+      $this->latitude,
+      $this->longitude
+    );
   }
 }

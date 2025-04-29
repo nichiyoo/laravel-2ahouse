@@ -17,7 +17,7 @@
     <x-ui.status variant="success" status="{{ session('success') }}" />
     <x-ui.status variant="error" status="{{ session('error') }}" />
 
-    <main class="pb-20">
+    <main class="pb-[72px]">
       @isset($header)
         {{ $header }}
       @endisset

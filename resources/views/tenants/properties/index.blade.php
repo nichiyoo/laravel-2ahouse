@@ -20,9 +20,15 @@
               </div>
 
               <div>
+                <x-ui.label for="distance" value="Distance range" />
+                <x-ui.progress name="distance" min="0" max="30" step="1"
+                  value="{{ request()->get('distance', 10) }}" />
+              </div>
+
+              <div>
                 <x-ui.label for="price" value="Price range" />
                 <x-ui.range name="price" min="100000" max="5000000" step="100000"
-                  value="{{ request()->get('price', 10) }}" />
+                  start="{{ request()->get('price_min', 100000) }}" end="{{ request()->get('price_max', 5000000) }}" />
               </div>
 
               <div>

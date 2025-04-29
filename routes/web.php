@@ -21,6 +21,7 @@ Route::middleware('auth')
   ->prefix('tenants')
   ->group(function () {
     Route::get('/app', [TenantController::class, 'app'])->name('app');
+    Route::get('/area', [TenantController::class, 'area'])->name('area');
     Route::get('/config', [TenantController::class, 'config'])->name('config');
     Route::get('/activity', [TenantController::class, 'activity'])->name('activity');
 
@@ -29,7 +30,6 @@ Route::middleware('auth')
       ->as('properties.')
       ->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::get('/area', 'area')->name('area');
         Route::get('/{property}', 'show')->name('show');
         Route::get('/{property}/map', 'map')->name('map');
         Route::get('/{property}/rent', 'rent')->name('rent');

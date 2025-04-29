@@ -21,6 +21,7 @@
       document.addEventListener('DOMContentLoaded', function() {
         const location = @json([$lat, $lng]);
         const properties = @json($properties);
+
         const map = L.map('map', {
           maxZoom: 20,
           minZoom: 6,
@@ -30,7 +31,6 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; OpenStreetMap contributors',
         }).addTo(map);
-
 
         properties.forEach(property => {
           const lat = property.latitude;

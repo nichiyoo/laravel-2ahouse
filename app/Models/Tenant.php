@@ -21,6 +21,19 @@ class Tenant extends Model
     'user_id',
     'phone',
     'avatar',
+    'address',
+    'latitude',
+    'longitude',
+  ];
+
+  /**
+   * The attributes that should be cast to native types.
+   *
+   * @var array<string, string>
+   */
+  protected $casts = [
+    'latitude' => 'decimal:6',
+    'longitude' => 'decimal:6',
   ];
 
   /**

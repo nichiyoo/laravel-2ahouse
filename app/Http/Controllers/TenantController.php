@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Distance;
 use App\Models\Tenant;
 use App\Models\Property;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreTenantRequest;
-use App\Http\Requests\UpdateTenantRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,32 +20,33 @@ class TenantController extends Controller
   public function app(): View | RedirectResponse
   {
     $user = Auth::user();
+    $tenant = $user->tenant;
 
-    $completed = $user->tenant->completed;
-    if (!$completed) return redirect()->route('profile.edit');
+    if (!$tenant->completed) {
+      return redirect()->route('profile.edit');
+    }
 
-    $nearest = Property::inRandomOrder()
-      ->with(['rooms', 'reviews'])
+    $nearest = Property::with(['rooms', 'reviews'])
       ->hasRooms()
       ->get()
-      ->sortByDesc('rating')
+      ->sortBy('distance')
       ->take(5)
       ->values();
 
-    $latest = Property::hasRooms()
-      ->with(['rooms'])
+    $latest = Property::with(['rooms'])
+      ->hasRooms()
       ->latest('updated_at')
       ->take(10)
       ->get();
 
-    $combined = [
+    $combinedIds = [
       ...$latest->pluck('id'),
       ...$nearest->pluck('id'),
     ];
 
-    $others = Property::hasRooms()
-      ->with(['rooms', 'landlord.user', 'saves'])
-      ->whereNotIn('id', $combined)
+    $others = Property::with(['rooms', 'landlord.user', 'saves'])
+      ->hasRooms()
+      ->whereNotIn('id', $combinedIds)
       ->take(8)
       ->get();
 
@@ -56,6 +56,42 @@ class TenantController extends Controller
       'others' => $others,
     ]);
   }
+
+
+  /**
+   * Display a listing of the resource based on user location.
+   * 
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\View\View
+   */
+  public function area(Request $request)
+  {
+    $user = Auth::user();
+    $tenant = $user->tenant;
+
+    $lat = $request->query('lat', $tenant->latitude);
+    $lng = $request->query('lng', $tenant->longitude);
+    $radius = $request->query('radius', 10);
+
+    $properties = collect();
+
+    $all = Property::whereNotNull('latitude')
+      ->whereNotNull('longitude')
+      ->get();
+
+    $properties = $all->filter(function ($property) use ($lat, $lng, $radius) {
+      $distance = Distance::haversine($lat, $lng, $property->latitude, $property->longitude);
+      return $distance <= $radius;
+    })->values();
+
+
+    return view('tenants.properties.area', [
+      'properties' => $properties,
+      'lat' => $lat,
+      'lng' => $lng,
+    ]);
+  }
+
 
   /**
    * Display the configuration page.
@@ -88,7 +124,7 @@ class TenantController extends Controller
   /**
    * Store a newly created resource in storage.
    */
-  public function store(StoreTenantRequest $request)
+  public function store(Request $request)
   {
     //
   }
@@ -112,7 +148,7 @@ class TenantController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(UpdateTenantRequest $request, Tenant $tenant)
+  public function update(Request $request, Tenant $tenant)
   {
     //
   }

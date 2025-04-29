@@ -19,6 +19,8 @@ class TenantFactory extends Factory
     return [
       'phone' => fake()->phoneNumber(),
       'address' => fake()->address(),
+      'latitude' => fake()->latitude($min = -6.2, $max = -6.1),
+      'longitude' => fake()->longitude($min = 106.7, $max = 106.9),
     ];
   }
 }
