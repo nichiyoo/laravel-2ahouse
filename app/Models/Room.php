@@ -4,16 +4,43 @@ namespace App\Models;
 
 use App\Enums\AmenitiesType;
 use App\Enums\PaymentType;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Scope;
+
+class RatingScope implements Scope
+{
+  /**
+   * Apply the scope to a given Eloquent query builder.
+   *
+   * @param  \Illuminate\Database\Eloquent\Builder  $builder
+   * @param  \Illuminate\Database\Eloquent\Model  $model
+   * @return void
+   */
+  public function apply(Builder $builder, Model $model)
+  {
+    $builder->withAvg('reviews as rating', 'rating');
+  }
+}
 
 class Room extends Model
 {
   /** @use HasFactory<\Database\Factories\RoomFactory> */
   use HasFactory;
+
+  /**
+   * The "booted" method of the model.
+   *
+   * @return void
+   */
+  protected static function booted()
+  {
+    static::addGlobalScope(new RatingScope);
+  }
 
   /**
    * The attributes that are mass assignable.
@@ -73,16 +100,5 @@ class Room extends Model
   public function contracts(): HasMany
   {
     return $this->hasMany(Contract::class);
-  }
-
-  /**
-   * Getter for the average rating of the property.
-   *
-   * @return float
-   */
-  public function getRatingAttribute(): float
-  {
-    $rating =  $this->reviews->avg('rating');
-    return round($rating, 1);
   }
 }

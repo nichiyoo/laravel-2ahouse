@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bookmark;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,13 +16,11 @@ class BookmarkController extends Controller
   public function index(): View
   {
     $user = Auth::user();
-    $tenant = $user->tenant;
 
-    $properties = Bookmark::with('property.reviews',)
-      ->where('tenant_id', $tenant->id)
+    $properties = $user->tenant->bookmarks()
+      ->with('property.landlord.user', 'property.saves')
       ->get()
-      ->pluck('property')
-      ->map(fn($property) => $property->load('landlord.user', 'rooms.reviews', 'saves'));
+      ->pluck('property');
 
     return view('tenants.bookmarks.index', [
       'properties' => $properties,

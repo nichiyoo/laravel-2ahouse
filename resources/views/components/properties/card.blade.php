@@ -29,9 +29,8 @@
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2 px-2 py-1 text-yellow-400 rounded-full bg-zinc-50">
             <i data-lucide="star" class="fill-current size-4"></i>
-            <span>{{ $property->rating }}</span>
+            <span>{{ round($property->rating, 1) }}</span>
           </div>
-
           <div class="px-2 py-1 rounded-full bg-zinc-50">
             <span>{{ round($property->distance, 1) }} Km</span>
           </div>

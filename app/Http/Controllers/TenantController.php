@@ -21,7 +21,7 @@ class TenantController extends Controller
       return redirect()->route('profile.edit');
     }
 
-    $properties = Property::with(['rooms', 'reviews', 'landlord.user', 'saves'])
+    $properties = Property::with(['landlord.user', 'saves'])
       ->hasRooms()
       ->get();
 

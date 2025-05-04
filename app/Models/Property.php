@@ -9,13 +9,41 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+
+class PriceAndRatingScope implements Scope
+{
+  /**
+   * Apply the scope to a given Eloquent query builder.
+   *
+   * @param  \Illuminate\Database\Eloquent\Builder  $builder
+   * @param  \Illuminate\Database\Eloquent\Model  $model
+   * @return void
+   */
+  public function apply(Builder $builder, Model $model)
+  {
+    $builder->withAvg('reviews as rating', 'rating')
+      ->withMin('rooms as min_price', 'price')
+      ->withMax('rooms as max_price', 'price');
+  }
+}
 
 class Property extends Model
 {
   /** @use HasFactory<\Database\Factories\PropertyFactory> */
   use HasFactory;
+
+  /**
+   * The "booted" method of the model.
+   *
+   * @return void
+   */
+  protected static function booted()
+  {
+    static::addGlobalScope(new PriceAndRatingScope);
+  }
 
   /**
    * The attributes that are mass assignable.
@@ -123,38 +151,6 @@ class Property extends Model
       $query->where('capacity', '>', 0);
     });
   }
-
-  /**
-   * Getter for starting price of the property.
-   *
-   * @return float
-   */
-  public function getMinPriceAttribute(): float
-  {
-    return $this->rooms->min('price');
-  }
-
-  /**
-   * Getter for the maximum price of the property.
-   *
-   * @return float
-   */
-  public function getMaxPriceAttribute(): float
-  {
-    return $this->rooms->max('price');
-  }
-
-  /**
-   * Getter for the average rating of the property.
-   *
-   * @return float
-   */
-  public function getRatingAttribute(): float
-  {
-    $rating =  $this->reviews->avg('rating');
-    return round($rating, 1);
-  }
-
 
   /**
    * Getter for the ammenities of the property.
