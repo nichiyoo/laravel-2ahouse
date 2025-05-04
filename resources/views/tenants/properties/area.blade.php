@@ -24,6 +24,24 @@
         const location = @json([$lat, $lng]);
         const properties = @json($properties);
 
+        const blue = new L.Icon({
+          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowSize: [41, 41]
+        });
+
+        const red = new L.Icon({
+          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowSize: [41, 41]
+        });
+
         const map = L.map('map', {
           maxZoom: 20,
           minZoom: 6,
@@ -39,11 +57,12 @@
           const lng = property.longitude;
 
           const marker = L.marker([lat, lng], {
-              color: 'red'
+              icon: red
             })
             .addTo(map)
             .bindPopup(`
               <strong>${property.name}</strong><br>
+              <a href="properties/${property.id}" class="text-blue-500 hover:underline">View details</a>
             `);
         });
 
@@ -53,7 +72,7 @@
           if (current) map.removeLayer(current);
 
           current = L.marker([lat, lng], {
-              color: 'blue'
+              icon: blue
             })
             .addTo(map)
             .bindPopup('<strong>Your Location</strong>')

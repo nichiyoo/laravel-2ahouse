@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Distance;
 use App\Models\Property;
 use App\Models\Bookmark;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +25,7 @@ class PropertyController extends Controller
     $rating = $request->get('rating');
     $distance = $request->get('distance');
 
-    $properties = Property::hasRooms()
+    $query = Property::hasRooms()
       ->with(['landlord.user', 'saves'])
       ->when($keyword, function ($query) use ($keyword) {
         return $query->where(function ($q) use ($keyword) {
@@ -35,13 +36,26 @@ class PropertyController extends Controller
             ->orWhere('zipcode', 'like', '%' . $keyword . '%');
         });
       })
-      ->get()
-      ->when($distance, function ($query) use ($distance) {
-        return $query->filter(function ($property) use ($distance) {
-          return $property->distance <= $distance;
+      ->when($min && $max, function ($query) use ($min, $max) {
+        return $query->whereHas('rooms', function ($queries) use ($min, $max) {
+          $queries->whereBetween('price', [
+            $min,
+            $max
+          ]);
         });
-      })
-      ->take(12)
+      });
+
+    if ($rating) $query->having('rating', '>=', $rating);
+
+    $properties = $query->get();
+
+    if ($distance) {
+      $properties = $properties->filter(function ($property) use ($distance) {
+        return $property->distance <= $distance;
+      });
+    }
+
+    $properties = $properties->take(12)
       ->sortBy('distance')
       ->values();
 
@@ -104,7 +118,7 @@ class PropertyController extends Controller
    */
   public function rooms(Property $property): View
   {
-    $property->load('rooms', 'landlord.user', 'saves');
+    $property->load('landlord.user', 'saves');
 
     return view('tenants.properties.rooms', [
       'property' => $property,

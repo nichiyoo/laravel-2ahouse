@@ -16,7 +16,7 @@
       @for ($i = 1; $i <= $property->rating; $i++)
         <i data-lucide="star" class="mb-1 fill-current size-4"></i>
       @endfor
-      <span class="ml-2">{{ $property->rating }}</span>
+      <span class="ml-2">{{ round($property->rating, 1) }}</span>
     </div>
   </div>
 

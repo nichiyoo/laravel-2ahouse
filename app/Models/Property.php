@@ -26,7 +26,8 @@ class PriceAndRatingScope implements Scope
   {
     $builder->withAvg('reviews as rating', 'rating')
       ->withMin('rooms as min_price', 'price')
-      ->withMax('rooms as max_price', 'price');
+      ->withMax('rooms as max_price', 'price')
+      ->groupBy('properties.id');
   }
 }
 

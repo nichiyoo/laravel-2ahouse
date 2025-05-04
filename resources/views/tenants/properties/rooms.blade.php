@@ -39,7 +39,7 @@
                 <dt class="font-medium">Rating</dt>
                 <dd class="flex items-center gap-2 text-yellow-500">
                   <i data-lucide="star" class="size-4"></i>
-                  <span>{{ $room->rating }}</span>
+                  <span>{{ round($room->rating, 1) }}</span>
                 </dd>
               </dl>
 
