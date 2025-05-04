@@ -32,10 +32,12 @@ Route::middleware('auth')
         Route::get('/', 'index')->name('index');
         Route::get('/{property}', 'show')->name('show');
         Route::get('/{property}/map', 'map')->name('map');
-        Route::get('/{property}/rent', 'rent')->name('rent');
         Route::get('/{property}/rooms', 'rooms')->name('rooms');
         Route::get('/{property}/review', 'review')->name('review');
         Route::post('/{property}/bookmark', 'bookmark')->name('bookmark');
+
+        Route::get('/{property}/rent', 'rent')->name('rent');
+        Route::post('/{property}/rent', 'rent')->name('reserve');
       });
 
     Route::controller(BookmarkController::class)

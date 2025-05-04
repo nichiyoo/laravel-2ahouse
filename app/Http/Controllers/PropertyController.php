@@ -170,6 +170,21 @@ class PropertyController extends Controller
     return redirect()->back();
   }
 
+  /**
+   * Show the form for requesting a rent.
+   * 
+   * @param  \App\Models\Property  $property
+   * @return \Illuminate\View\View
+   */
+  public function rent(Property $property): View
+  {
+    $property->load('rooms');
+
+    return view('tenants.properties.rent', [
+      'property' => $property,
+    ]);
+  }
+
 
   /**
    * Show the form for editing the specified resource.

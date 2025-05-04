@@ -1,10 +1,10 @@
 <div class="flex items-center justify-between gap-2">
-  <div>
-    <x-ui.button size="icon" onclick="history.back(); return false;">
+  <a href="{{ route('tenants.properties.index') }}">
+    <x-ui.button size="icon">
       <i data-lucide="chevron-left" class="size-4"></i>
       <span class="sr-only">Back</span>
     </x-ui.button>
-  </div>
+  </a>
 
   <form method="POST" action="{{ route('tenants.properties.bookmark', $property) }}">
     @csrf
