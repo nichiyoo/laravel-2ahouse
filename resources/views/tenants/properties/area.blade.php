@@ -49,11 +49,11 @@
           const image = property.image;
 
           const propertyIcon = L.divIcon({
-            className: 'custom-property-marker',
+            className: 'property-marker',
             html: `
-              <div class="property-marker-container">
-                <div class="property-image-wrapper">
-                  <img src="${image}" alt="${property.name}" class="property-image">
+              <div class="marker-container">
+                <div class="image-wrapper">
+                  <img src="${image}" alt="${property.name}" class="image">
                 </div>
               </div>
             `,
@@ -76,7 +76,6 @@
 
         const move = (lat, lng) => {
           if (current) map.removeLayer(current);
-
           current = L.marker([lat, lng], {
               icon: blue
             })
@@ -107,28 +106,28 @@
     </script>
 
     <style>
-      .custom-property-marker {
+      .property-marker {
         background: transparent;
         border: none;
       }
 
-      .property-marker-container {
+      .marker-container {
         position: relative;
         width: 48px;
         height: 48px;
       }
 
-      .property-image-wrapper {
-        position: absolute;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
+      .image-wrapper {
+        width: 40px;
+        height: 40px;
         overflow: hidden;
-        border: 1px solid white;
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        position: absolute;
+        border: 2px solid white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
       }
 
-      .property-image {
+      .image {
         width: 100%;
         height: 100%;
         object-fit: cover;
