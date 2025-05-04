@@ -33,15 +33,6 @@
           shadowSize: [41, 41]
         });
 
-        const red = new L.Icon({
-          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-          popupAnchor: [1, -34],
-          shadowSize: [41, 41]
-        });
-
         const map = L.map('map', {
           maxZoom: 20,
           minZoom: 6,
@@ -55,9 +46,24 @@
         properties.forEach(property => {
           const lat = property.latitude;
           const lng = property.longitude;
+          const image = property.image;
+
+          const propertyIcon = L.divIcon({
+            className: 'custom-property-marker',
+            html: `
+              <div class="property-marker-container">
+                <div class="property-image-wrapper">
+                  <img src="${image}" alt="${property.name}" class="property-image">
+                </div>
+              </div>
+            `,
+            iconSize: [48, 48],
+            iconAnchor: [20, 20],
+            popupAnchor: [0, -20]
+          });
 
           const marker = L.marker([lat, lng], {
-              icon: red
+              icon: propertyIcon
             })
             .addTo(map)
             .bindPopup(`
@@ -99,5 +105,34 @@
         });
       });
     </script>
+
+    <style>
+      .custom-property-marker {
+        background: transparent;
+        border: none;
+      }
+
+      .property-marker-container {
+        position: relative;
+        width: 48px;
+        height: 48px;
+      }
+
+      .property-image-wrapper {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid white;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .property-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
   @endpush
 </x-app-layout>
