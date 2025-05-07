@@ -10,36 +10,28 @@
       <x-ui.label for="name" value="Name" />
       <x-ui.input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus
         autocomplete="name" placeholder="Enter your name" />
-      @error('name')
-        <x-ui.error message="{{ $message }}" />
-      @enderror
+      <x-ui.error :messages="$errors->get('name')" />
     </div>
 
     <div>
       <x-ui.label for="email" value="Email" />
       <x-ui.input id="email" type="email" name="email" value="{{ old('email') }}" required
         autocomplete="username" placeholder="Enter your email" />
-      @error('email')
-        <x-ui.error message="{{ $message }}" />
-      @enderror
+      <x-ui.error :messages="$errors->get('email')" />
     </div>
 
     <div>
       <x-ui.label for="password" value="Password" />
       <x-ui.input id="password" type="password" name="password" required autocomplete="new-password"
         placeholder="Enter your password" />
-      @error('password')
-        <x-ui.error message="{{ $message }}" />
-      @enderror
+      <x-ui.error :messages="$errors->get('password')" />
     </div>
 
     <div>
       <x-ui.label for="password_confirmation" value="Confirm Password" />
       <x-ui.input id="password_confirmation" type="password" name="password_confirmation" required
         autocomplete="new-password" placeholder="Confirm your password" />
-      @error('password_confirmation')
-        <x-ui.error message="{{ $message }}" />
-      @enderror
+      <x-ui.error :messages="$errors->get('password_confirmation')" />
     </div>
 
     <div class="flex items-center justify-end gap-4 text-sm">
@@ -52,7 +44,6 @@
       <span>Create Account</span>
       <i data-lucide="arrow-right"></i>
     </x-ui.button>
-
     <x-social-login />
   </form>
 </x-guest-layout>

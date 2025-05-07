@@ -28,9 +28,7 @@
       <div class="mt-6">
         <x-ui.label for="password" value="Password" />
         <x-ui.input id="password" name="password" type="password" placeholder="Enter your password" />
-        @error('password')
-          <x-ui.error message="{{ $message }}" class="mt-2" />
-        @enderror
+        <x-ui.error :messages="$errors->userDeletion->get('password')" />
       </div>
 
       <div class="flex justify-end gap-2 mt-6">

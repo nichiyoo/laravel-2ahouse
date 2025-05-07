@@ -34,63 +34,55 @@
       <div>
         <x-ui.label for="name" value="Full Name" />
         <x-ui.input id="name" type="text" name="name" value="{{ old('name', auth()->user()->name ?? '') }}"
-          required autofocus placeholder="Enter your fullname" />
-        @error('name')
-          <x-ui.error message="{{ $message }}" />
-        @enderror
+          required placeholder="Enter your fullname" readonly />
+        <x-ui.error :messages="$errors->get('name')" />
       </div>
 
       <div>
         <x-ui.label for="email" value="Email" />
         <x-ui.input id="email" type="email" name="email" value="{{ old('email', auth()->user()->email ?? '') }}"
-          required placeholder="Enter your email" />
-        @error('email')
-          <x-ui.error message="{{ $message }}" />
-        @enderror
+          required placeholder="Enter your email" readonly />
+        <x-ui.error :messages="$errors->get('email')" />
       </div>
 
       <div>
         <x-ui.label for="phone" value="Phone Number" />
         <x-ui.input id="phone" type="tel" name="phone"
-          value="{{ old('phone', auth()->user()->tenant->phone ?? '') }}" required
-          placeholder="Enter your phone number" />
-        @error('phone')
-          <x-ui.error message="{{ $message }}" />
-        @enderror
+          value="{{ old('phone', auth()->user()->tenant->phone ?? '') }}" required placeholder="Enter your phone number"
+          readonly />
+        <x-ui.error :messages="$errors->get('phone')" />
       </div>
 
       <div>
         <x-ui.label for="room_id" value="Room Choice" />
-        <x-ui.select id="room_id" name="room_id" required placeholder="Select a room">
+        <x-ui.select id="room_id" name="room_id" required autofocus placeholder="Select a room">
           @foreach ($property->rooms as $room)
             @if ($room->capacity > 0)
+              @php
+                $text = $room->type . ' - Rp' . number_format($room->price, 2) . ' - ' . $room->capacity . ' available';
+              @endphp
+
               <option value="{{ $room->id }}" {{ old('room_id') == $room->id ? 'selected' : '' }}>
-                {{ $room->type }} - ${{ number_format($room->price, 2) }}/month - {{ $room->capacity }} available
+                {{ $text }}
               </option>
             @endif
           @endforeach
         </x-ui.select>
-        @error('room_id')
-          <x-ui.error message="{{ $message }}" />
-        @enderror
+        <x-ui.error :messages="$errors->get('room_id')" />
       </div>
 
       <div>
         <x-ui.label for="start_date" value="Start Date" />
         <x-ui.input id="start_date" type="date" name="start_date" min="{{ date('Y-m-d') }}"
           value="{{ old('start_date', date('Y-m-d', strtotime('+1 week'))) }}" required />
-        @error('start_date')
-          <x-ui.error message="{{ $message }}" />
-        @enderror
+        <x-ui.error :messages="$errors->get('start_date')" />
       </div>
 
       <div>
         <x-ui.label for="notes" value="Additional Notes (Optional)" />
         <x-ui.textarea id="notes" name="notes"
           placeholder="Any special requests or information we should know">{{ old('notes') }}</x-ui.textarea>
-        @error('notes')
-          <x-ui.error message="{{ $message }}" />
-        @enderror
+        <x-ui.error :messages="$errors->get('notes')" />
       </div>
 
       <div class="flex flex-col gap-4">
@@ -111,10 +103,7 @@
             required>
           <label for="agree_terms" class="text-sm">I agree to the rental terms and conditions</label>
         </div>
-
-        @error('agree_terms')
-          <x-ui.error message="{{ $message }}" />
-        @enderror
+        <x-ui.error :messages="$errors->get('agree_terms')" />
       </div>
     </form>
   </div>

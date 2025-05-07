@@ -36,10 +36,10 @@
 
         const location = [property.latitude, property.longitude];
         const map = L.map('map', {
-          maxZoom: 20,
-          minZoom: 6,
+          maxZoom: 15,
+          minZoom: 10,
           zoomControl: false
-        }).setView(location, 15);
+        }).setView(location, 12);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; OpenStreetMap contributors',

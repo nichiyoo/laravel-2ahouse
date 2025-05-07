@@ -12,9 +12,7 @@
     <div>
       <x-ui.label for="password" value="Password" />
       <x-ui.input id="password" type="password" name="password" required autocomplete="current-password" />
-      @error('password')
-        <x-ui.error messages="{{ $message }}" />
-      @enderror
+      <x-ui.error :messages="$errors->get('password')" />
     </div>
 
     <div class="flex justify-end mt-4">

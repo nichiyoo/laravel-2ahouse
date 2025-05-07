@@ -11,7 +11,6 @@
     <div class="relative">
       <x-ui.input id="query" name="query" type="search" placeholder="Search property"
         value="{{ request()->get('query') }}" />
-
       <div class="absolute top-0 right-0 m-3">
         <button type="submit">
           <i data-lucide="search"></i>
@@ -20,8 +19,6 @@
       </div>
     </div>
 
-    @error('query')
-      <x-ui.error message="{{ $message }}" class="mt-2" />
-    @enderror
+    <x-ui.error :messages="$errors->get('query')" />
   </div>
 </form>

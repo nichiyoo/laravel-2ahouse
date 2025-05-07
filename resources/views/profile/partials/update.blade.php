@@ -20,18 +20,14 @@
       <x-ui.label for="name" value="Name" />
       <x-ui.input id="name" name="name" type="text" value="{{ old('name', $user->name) }}" required
         autocomplete="name" />
-      @error('name')
-        <x-ui.error message="{{ $message }}" />
-      @enderror
+      <x-ui.error :messages="$errors->get('name')" />
     </div>
 
     <div>
       <x-ui.label for="email" value="Name" />
       <x-ui.input id="email" name="email" type="email" value="{{ old('email', $user->email) }}" required
         autocomplete="username" />
-      @error('email')
-        <x-ui.error message="{{ $message }}" />
-      @enderror
+      <x-ui.error :messages="$errors->get('email')" />
     </div>
 
     <div class="flex items-center gap-4">

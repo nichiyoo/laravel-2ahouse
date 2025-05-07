@@ -178,7 +178,9 @@ class PropertyController extends Controller
    */
   public function rent(Property $property): View
   {
-    $property->load('rooms');
+    $property->load(['rooms' => function ($query) {
+      $query->where('capacity', '>', 0);
+    }]);
 
     return view('tenants.properties.rent', [
       'property' => $property,

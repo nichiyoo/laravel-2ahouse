@@ -17,9 +17,7 @@
       <x-ui.label for="email" value="Email" />
       <x-ui.input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
         placeholder="Enter your email" />
-      @error('email')
-        <x-ui.error :messages="$errors->get('email')" />
-      @enderror
+      <x-ui.error :messages="$errors->get('email')" />
     </div>
 
     <div class="flex items-center justify-end">
