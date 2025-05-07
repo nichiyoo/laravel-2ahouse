@@ -2,6 +2,7 @@ import { fontFamily } from 'tailwindcss/defaultTheme';
 
 import colors from 'tailwindcss/colors';
 import forms from '@tailwindcss/forms';
+import plugin from 'tailwindcss/plugin';
 
 
 /** @type {import('tailwindcss').Config} */
@@ -45,5 +46,10 @@ export default {
     },
   },
 
-  plugins: [forms],
+  plugins: [
+    forms,
+    plugin(({ addVariant }) => {
+      addVariant("both", ["&:focus", "&:hover"])
+    })
+  ],
 };

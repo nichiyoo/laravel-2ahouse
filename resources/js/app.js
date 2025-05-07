@@ -2,21 +2,23 @@ import './font';
 import './lucide';
 import './bootstrap';
 
-import Alpine from 'alpinejs';
-import Embla from 'embla-carousel'
+import alpine from 'alpinejs';
+import focus from '@alpinejs/focus';
+import embla from 'embla-carousel'
 
-window.Alpine = Alpine;
-Alpine.start();
+window.Alpine = alpine;
+alpine.plugin(focus);
+alpine.start();
 
 const slides = document.querySelector('#slides')
-slides && Embla(slides, {
+slides && embla(slides, {
   loop: true,
   align: 'start',
   containScroll: true,
 })
 
 const chips = document.querySelector('#chips')
-chips && Embla(chips, {
+chips && embla(chips, {
   loop: true,
   align: 'start',
   containScroll: true,

@@ -18,6 +18,7 @@
     "vite": "^6.2.4"
   },
   "dependencies": {
+    "@alpinejs/focus": "^3.14.9",
     "@fontsource/poppins": "^5.2.5",
     "embla-carousel": "^8.6.0",
     "embla-carousel-auto-scroll": "^8.6.0",

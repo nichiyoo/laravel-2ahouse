@@ -10,9 +10,8 @@
         </a>
 
         <div class="p-4">
-          <x-ui.button form="rentForm" type="submit">
-            <i data-lucide="shopping-cart" class="size-5"></i>
-            <span>Rent</span>
+          <x-ui.button form="rent" type="submit">
+            <span>Submit</span>
           </x-ui.button>
         </div>
       </div>
@@ -27,7 +26,7 @@
       </h1>
     </section>
 
-    <form id="rentForm" method="POST" action="{{ route('tenants.properties.reserve', $property) }}"
+    <form id="rent" method="POST" action="{{ route('tenants.properties.reserve', $property) }}"
       class="grid gap-6">
       @csrf
 

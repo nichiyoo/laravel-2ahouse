@@ -16,14 +16,6 @@
             <span>Oops! No properties found.</span>
             <i data-lucide="search" class="size-4"></i>
           </div>
-
-          <div class="flex justify-center">
-            <a href="{{ route('tenants.properties.index') }}">
-              <x-ui.button>
-                Reset
-              </x-ui.button>
-            </a>
-          </div>
         </div>
       @endforelse
     </section>
