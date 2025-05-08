@@ -19,7 +19,7 @@ class CompletedMiddleware
   {
     $user = Auth::user();
     if (!$user->completed) {
-      return redirect()->route('profile.edit')->with([
+      return redirect()->route('config')->with([
         'error' => 'Please complete your profile before accessing this page.',
       ]);
     }

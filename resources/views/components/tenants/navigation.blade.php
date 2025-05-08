@@ -33,8 +33,8 @@
           'color' => asset('icons/active/activity.svg'),
       ],
       [
-          'href' => route('tenants.config'),
-          'active' => request()->routeIs('tenants.config') || request()->routeIs('profile.*'),
+          'href' => route('config'),
+          'active' => request()->routeIs('config') || request()->routeIs('profile.*'),
           'label' => 'Profile',
           'icon' => asset('icons/profile.svg'),
           'color' => asset('icons/active/profile.svg'),

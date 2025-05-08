@@ -77,17 +77,6 @@ class TenantController extends Controller
     ]);
   }
 
-
-  /**
-   * Display the configuration page.
-   * 
-   * @return \Illuminate\Contracts\View\View
-   */
-  public function config()
-  {
-    return view('tenants.config');
-  }
-
   /**
    * Display the activity page.
    * 

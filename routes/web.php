@@ -11,6 +11,7 @@ Route::get('/', fn() => view('onboard'))->middleware('guest')->name('onboard');
 
 Route::middleware('auth')->group(function () {
   Route::get('/app', [AppController::class, 'index'])->name('dashboard');
+  Route::get('/config', [AppController::class, 'config'])->name('config');
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -23,7 +24,6 @@ Route::middleware('auth', 'role:tenant', 'completed')
     Route::get('/app', [TenantController::class, 'app'])->name('app');
     Route::get('/area', [TenantController::class, 'area'])->name('area');
     Route::get('/activity', [TenantController::class, 'activity'])->name('activity');
-    Route::get('/config', [TenantController::class, 'config'])->name('config')->withoutMiddleware('completed');
 
     Route::controller(PropertyController::class)
       ->prefix('properties')
@@ -35,7 +35,6 @@ Route::middleware('auth', 'role:tenant', 'completed')
         Route::get('/{property}/rooms', 'rooms')->name('rooms');
         Route::get('/{property}/review', 'review')->name('review');
         Route::post('/{property}/bookmark', 'bookmark')->name('bookmark');
-
         Route::get('/{property}/rent', 'rent')->name('rent');
         Route::post('/{property}/rent', 'rent')->name('reserve');
       });
