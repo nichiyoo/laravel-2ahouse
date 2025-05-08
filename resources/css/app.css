@@ -22,6 +22,10 @@
   body {
     overscroll-behavior: none;
   }
+
+  [x-cloak] {
+    display: none !important;
+  }
 }
 
 @layer components {
