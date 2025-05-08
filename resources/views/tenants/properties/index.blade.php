@@ -37,7 +37,12 @@
                   value="{{ request()->get('rating', 0) }}" />
               </div>
 
-              <div class="mt-4">
+              <div class="grid grid-cols-2 gap-2">
+                <x-ui.button type="button" variant="secondary"
+                  x-on:click="$dispatch('close-modal', 'filter-properties')">
+                  Cancel
+                </x-ui.button>
+
                 <x-ui.button>
                   Apply
                 </x-ui.button>

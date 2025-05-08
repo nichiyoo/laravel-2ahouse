@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RoleType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,16 +14,15 @@ class AppController extends Controller
   public function index()
   {
     $user = Auth::user();
-    $role = $user->role->name;
+    $role = $user->role;
 
     switch ($role) {
-      case 'tenant':
+      case RoleType::TENANT:
         return redirect()->route('tenants.app');
 
-      case 'landlord':
-      case 'admin':
-        Auth::logout();
-        return;
+      case RoleType::LANDLORD:
+      case RoleType::ADMIN:
+        return redirect()->route('tenants.app');
     }
   }
 }

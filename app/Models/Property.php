@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoleType;
 use App\Helpers\Distance;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -134,7 +135,7 @@ class Property extends Model
   {
     $user = Auth::user();
     if (!$user) return $this->hasMany(Bookmark::class);
-    if ($user->role->name !== 'tenant') return $this->hasMany(Bookmark::class);
+    if ($user->role !== RoleType::TENANT) return $this->hasMany(Bookmark::class);
 
     return $this->hasMany(Bookmark::class)
       ->where('tenant_id', $user->tenant->id);

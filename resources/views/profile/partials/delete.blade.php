@@ -32,7 +32,7 @@
       </div>
 
       <div class="flex justify-end gap-2 mt-6">
-        <x-ui.button type="button" variant="secondary" x-on:click="$dispatch('close')">
+        <x-ui.button type="button" variant="secondary" x-on:click="$dispatch('close-modal', 'confirm-user-deletion')">
           Cancel
         </x-ui.button>
         <x-ui.button variant="destructive">

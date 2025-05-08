@@ -13,10 +13,10 @@
     </div>
 
     <div class="flex flex-col justify-end gap-2 basis-1/3">
-      <a href="{{ route('login') }}">
+      <a href="{{ route('register', ['role' => 'tenant']) }}">
         <x-ui.button variant="secondary">Are you a user?</x-ui.button>
       </a>
-      <a href="{{ route('login') }}">
+      <a href="{{ route('register', ['role' => 'landlord']) }}">
         <x-ui.button variant="primary">Are you an owner?</x-ui.button>
       </a>
     </div>

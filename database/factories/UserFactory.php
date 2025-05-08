@@ -24,8 +24,6 @@ class UserFactory extends Factory
    */
   public function definition(): array
   {
-    $role = Role::where('name', 'tenant')->first();
-
     return [
       'name' => fake()->firstName() . ' ' . fake()->lastName(),
       'email' => fake()->unique()->safeEmail(),

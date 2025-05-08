@@ -26,7 +26,7 @@
 
         const map = L.map('map', {
           maxZoom: 15,
-          minZoom: 12,
+          minZoom: 10,
           zoomControl: false
         }).setView(location, 12);
 

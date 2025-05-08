@@ -1,21 +1,23 @@
 @props([
+    'readonly' => false,
     'disabled' => false,
-    'required' => false,
     'placeholder' => 'Select an option',
 ])
 
 @php
   $props = $attributes
       ->class([
-          'w-full text-sm rounded-lg shadow-sm border-zinc-300 text-zinc-900 focus:border-primary-500 focus:ring-primary-500 placeholder:text-zinc-400',
+          'disabled:bg-zinc-200 disabled:text-zinc-500' => $disabled,
+          'bg-zinc-50 text-zinc-500 focus:ring-0 focus:border-zinc-300' => $readonly,
       ])
       ->merge([
-          'class' => '',
           'disabled' => $disabled,
-          'required' => $required,
+          'readonly' => $readonly,
+          'class' => 'text-sm p-3 border-zinc-300 focus:border-primary-500 focus:ring-primary-500 rounded-xl w-full',
       ]);
 @endphp
+
 <select {{ $props }}>
-  <option value="">{{ $placeholder }}</option>
+  <option value="" disabled>{{ $placeholder }}</option>
   {{ $slot }}
 </select>

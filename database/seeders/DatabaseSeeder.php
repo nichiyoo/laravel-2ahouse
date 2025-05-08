@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleType;
 use App\Models\Landlord;
 use App\Models\Property;
 use App\Models\Review;
-use App\Models\Role;
 use App\Models\Room;
 use App\Models\Tenant;
 use App\Models\User;
@@ -19,27 +19,17 @@ class DatabaseSeeder extends Seeder
    */
   public function run(): void
   {
-    foreach (['admin', 'landlord', 'tenant'] as $role) {
-      Role::factory()->create([
-        'name' => $role,
-      ]);
-    }
-
-    $admin = Role::where('name', 'admin')->first();
-    $tenant = Role::where('name', 'tenant')->first();
-    $landlord = Role::where('name', 'landlord')->first();
-
     User::factory()->create([
       'name' => 'Administrator',
       'email' => 'admin@example.com',
-      'role_id' => $admin->id,
+      'role' => RoleType::ADMIN,
     ]);
 
     Landlord::factory()->create([
       'user_id' => User::factory()->create([
         'name' => 'Landlord',
         'email' => 'landlord@example.com',
-        'role_id' => $landlord->id,
+        'role' => RoleType::LANDLORD,
       ])->id,
     ]);
 
@@ -47,31 +37,42 @@ class DatabaseSeeder extends Seeder
       'user_id' => User::factory()->create([
         'name' => 'Tenant',
         'email' => 'tenant@example.com',
-        'role_id' => $tenant->id,
+        'role' => RoleType::TENANT,
       ])->id,
       'completed' => true,
     ]);
 
     User::factory()->count(20)->create([
-      'role_id' => $tenant->id,
+      'role' => RoleType::TENANT,
     ]);
 
     User::factory()->count(10)->create([
-      'role_id' => $landlord->id,
+      'role' => RoleType::LANDLORD,
     ]);
 
-    $users = User::whereIn('role_id', [
-      $landlord->id,
-      $tenant->id
-    ])->get();
+    $users = User::whereIn('role', [
+      RoleType::LANDLORD,
+      RoleType::TENANT
+    ])
+      ->where(function ($query) {
+        $query->where('role', RoleType::TENANT)->whereDoesntHave('tenant', function ($query) {
+          $query->where('completed', true);
+        });
+      })
+      ->orWhere(function ($query) {
+        $query->where('role', RoleType::LANDLORD)->whereDoesntHave('landlord', function ($query) {
+          $query->where('completed', true);
+        });
+      })
+      ->get();
 
     foreach ($users as $user) {
-      switch ($user->role_id) {
-        case $landlord->id:
+      switch ($user->role) {
+        case RoleType::LANDLORD:
           Landlord::factory()->create(['user_id' => $user->id]);
           break;
 
-        case $tenant->id:
+        case RoleType::TENANT:
           Tenant::factory()->create(['user_id' => $user->id]);
           break;
       }

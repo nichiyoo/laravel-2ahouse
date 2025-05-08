@@ -3,8 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\RoleType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,7 +25,7 @@ class User extends Authenticatable
     'name',
     'email',
     'password',
-    'role_id',
+    'role',
   ];
 
   /**
@@ -47,17 +48,8 @@ class User extends Authenticatable
     return [
       'email_verified_at' => 'datetime',
       'password' => 'hashed',
+      'role' => RoleType::class,
     ];
-  }
-
-  /**
-   * Get the role associated with the user.
-   *
-   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-   */
-  public function role(): BelongsTo
-  {
-    return $this->belongsTo(Role::class);
   }
 
   /**
@@ -67,7 +59,9 @@ class User extends Authenticatable
    */
   public function landlord(): HasOne
   {
-    return $this->hasOne(Landlord::class);
+    return $this->hasOne(Landlord::class)->withDefault([
+      'comleted' => false,
+    ]);
   }
 
   /**
@@ -77,7 +71,9 @@ class User extends Authenticatable
    */
   public function tenant(): HasOne
   {
-    return $this->hasOne(Tenant::class);
+    return $this->hasOne(Tenant::class)->withDefault([
+      'completed' => false,
+    ]);
   }
 
   /**
@@ -88,5 +84,20 @@ class User extends Authenticatable
   public function feedbacks(): HasMany
   {
     return $this->hasMany(Feedback::class);
+  }
+
+  /**
+   * Getter to check if user profile is completed.
+   *
+   * @return bool
+   */
+  public function getCompletedAttribute(): bool
+  {
+    return match ($this->role) {
+      RoleType::ADMIN => true,
+      RoleType::TENANT => $this->tenant->completed,
+      RoleType::LANDLORD => $this->landlord->completed,
+      default => false,
+    };
   }
 }

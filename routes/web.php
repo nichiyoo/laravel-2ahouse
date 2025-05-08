@@ -16,14 +16,14 @@ Route::middleware('auth')->group(function () {
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')
+Route::middleware('auth', 'role:tenant', 'completed')
   ->as('tenants.')
   ->prefix('tenants')
   ->group(function () {
     Route::get('/app', [TenantController::class, 'app'])->name('app');
     Route::get('/area', [TenantController::class, 'area'])->name('area');
-    Route::get('/config', [TenantController::class, 'config'])->name('config');
     Route::get('/activity', [TenantController::class, 'activity'])->name('activity');
+    Route::get('/config', [TenantController::class, 'config'])->name('config')->withoutMiddleware('completed');
 
     Route::controller(PropertyController::class)
       ->prefix('properties')

@@ -24,6 +24,7 @@ class Tenant extends Model
     'address',
     'latitude',
     'longitude',
+    'completed',
   ];
 
   /**
@@ -34,6 +35,7 @@ class Tenant extends Model
   protected $casts = [
     'latitude' => 'decimal:6',
     'longitude' => 'decimal:6',
+    'completed' => 'boolean',
   ];
 
   /**

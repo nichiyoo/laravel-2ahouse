@@ -17,10 +17,10 @@ return new class extends Migration
       $table->string('phone')->nullable();
       $table->string('avatar')->nullable();
       $table->text('address')->nullable();
-      $table->decimal('latitude', 10, 6);
-      $table->decimal('longitude', 10, 6);
+      $table->decimal('latitude', 10, 6)->nullable();
+      $table->decimal('longitude', 10, 6)->nullable();
       $table->boolean('completed')->default(false);
-      $table->foreignId('user_id')->constrained()->onDelete('cascade');
+      $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
     });
   }
 

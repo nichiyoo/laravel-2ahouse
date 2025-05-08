@@ -29,7 +29,6 @@
 </div>
 
 @once
-
   <script>
     document.addEventListener('alpine:init', () => {
       Alpine.data('modal', () => ({

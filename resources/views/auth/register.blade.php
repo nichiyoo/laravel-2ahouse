@@ -21,6 +21,18 @@
     </div>
 
     <div>
+      <x-ui.label for="role" value="Role" />
+      <x-ui.select id="role" name="role" required autocomplete="role" placeholder="Select your role">
+        @foreach ($roles as $role)
+          <option value="{{ $role }}" @selected(request()->get('role') == $role->value ?? old('role') == $role->value)>
+            {{ $role->label() }}
+          </option>
+        @endforeach
+      </x-ui.select>
+      <x-ui.error :messages="$errors->get('role')" />
+    </div>
+
+    <div>
       <x-ui.label for="password" value="Password" />
       <x-ui.input id="password" type="password" name="password" required autocomplete="new-password"
         placeholder="Enter your password" />

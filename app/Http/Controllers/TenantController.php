@@ -12,14 +12,15 @@ use Illuminate\Http\Request;
 
 class TenantController extends Controller
 {
+  /**
+   * Display a listing of the resource.
+   * 
+   * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+   */
   public function app(): View | RedirectResponse
   {
     $user = Auth::user();
     $tenant = $user->tenant;
-
-    if (!$tenant->completed) {
-      return redirect()->route('profile.edit');
-    }
 
     $properties = Property::with(['landlord.user', 'saves'])
       ->hasRooms()
@@ -41,8 +42,6 @@ class TenantController extends Controller
       'others' => $others,
     ]);
   }
-
-
 
   /**
    * Display a listing of the resource based on user location.
