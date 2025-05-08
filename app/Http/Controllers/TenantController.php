@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\Distance;
+use App\Helpers\Distance;
 use App\Models\Tenant;
 use App\Models\Property;
 use Illuminate\Support\Facades\Auth;

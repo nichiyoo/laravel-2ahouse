@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Helper\Distance;
+use App\Helpers\Distance;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

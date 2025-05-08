@@ -28,7 +28,8 @@ import {
   LifeBuoy,
   Bolt,
   LogOut,
-  ListFilter
+  ListFilter,
+  Activity
 } from 'lucide';
 
 createIcons({
@@ -61,6 +62,7 @@ createIcons({
     LifeBuoy,
     Bolt,
     LogOut,
-    ListFilter
+    ListFilter,
+    Activity
   }
 });

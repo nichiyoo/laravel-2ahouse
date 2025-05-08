@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\Distance;
+use App\Helpers\Distance;
 use App\Models\Property;
 use App\Models\Bookmark;
 use Illuminate\Http\RedirectResponse;
