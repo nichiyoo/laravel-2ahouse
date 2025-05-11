@@ -23,8 +23,8 @@
           'show' => Auth::user()->role == RoleType::TENANT,
       ],
       [
-          'href' => route('tenants.properties.index'),
-          'active' => request()->routeIs('tenants.properties.index'),
+          'href' => route('properties.index'),
+          'active' => request()->routeIs('properties.index'),
           'label' => 'Search',
           'icon' => asset('icons/search.svg'),
           'color' => asset('icons/active/search.svg'),

@@ -11,7 +11,7 @@
 <section {{ $props }} id="slides">
   <div class="flex embla__container">
     @foreach ($properties as $property)
-      <a href="{{ route('tenants.properties.show', $property) }}"
+      <a href="{{ route('properties.show', $property) }}"
         class="relative flex-none mr-4 overflow-hidden embla__slide basis-11/12 aspect-thumbnail size-full rounded-2xl content">
         <img src="{{ $property->image }}" alt="{{ $property->name }}" class="absolute object-cover size-full" />
         <div class="absolute inset-0 bg-gradient-to-tr from-zinc-950/80 to-transparent"></div>

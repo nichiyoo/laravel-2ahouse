@@ -13,7 +13,7 @@
     @foreach (collect($properties)->chunk(2) as $chunk)
       <div class="grid flex-none gap-4 mr-4 basis-3/4 embla__slide">
         @foreach ($chunk as $property)
-          <a href="{{ route('tenants.properties.show', $property) }}"
+          <a href="{{ route('properties.show', $property) }}"
             class="grid items-center grid-cols-3 gap-4 overflow-hidden content rounded-2xl">
             <div class="aspect-square">
               <img src="{{ $property->image }}" alt="{{ $property->name }}" class="object-cover size-full" />

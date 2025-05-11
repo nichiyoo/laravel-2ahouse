@@ -33,7 +33,7 @@
           Other properties
         </h2>
 
-        <a href="{{ route('tenants.properties.index') }}" class="flex items-center gap-2 text-sm text-primary-500">
+        <a href="{{ route('properties.index') }}" class="flex items-center gap-2 text-sm text-primary-500">
           <span>Explore</span>
           <i data-lucide="arrow-up-right" class="size-4"></i>
         </a>

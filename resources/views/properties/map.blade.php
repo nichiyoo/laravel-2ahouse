@@ -1,8 +1,15 @@
 <x-app-layout>
+  <div class="relative">
+    <div id="map" class="absolute inset-0 z-0 w-full h-screen"></div>
+    <section class="relative flex flex-col justify-between pb-16 text-white aspect-square p-content">
+      <x-properties.detail.topbar :property="$property" />
+    </section>
+  </div>
+
   <x-slot:action>
     <nav class="fixed bottom-0 w-full max-w-md">
       <div class="grid grid-cols-2 border-t border-zinc-200 bg-zinc-50">
-        <a href="{{ route('tenants.properties.show', $property) }}" class="p-4">
+        <a href="{{ route('properties.show', $property) }}" class="p-4">
           <x-ui.button variant="secondary">
             <i data-lucide="arrow-left" class="size-5"></i>
             <span>Back</span>
@@ -18,13 +25,6 @@
       </div>
     </nav>
   </x-slot>
-
-  <div class="relative">
-    <div id="map" class="absolute inset-0 z-0 w-full h-screen"></div>
-    <section class="relative flex flex-col justify-between pb-16 text-white aspect-square p-content">
-      <x-properties.detail.topbar :property="$property" />
-    </section>
-  </div>
 
   @push('scripts')
     @vite(['resources/js/leaflet.js'])

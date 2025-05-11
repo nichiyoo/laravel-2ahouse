@@ -1,8 +1,4 @@
 <x-app-layout>
-  <x-slot:action>
-    <x-properties.detail.action :property="$property" />
-  </x-slot>
-
   <div class="relative grid gap-6">
     <div class="absolute top-0 w-full">
       <img src="{{ $property->image }}" alt="{{ $property->name }}" class="object-cover aspect-square size-full" />
@@ -70,4 +66,8 @@
       </div>
     </x-properties.detail>
   </div>
+
+  <x-slot:action>
+    <x-properties.detail.action :property="$property" />
+  </x-slot>
 </x-app-layout>

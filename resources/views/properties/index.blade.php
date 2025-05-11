@@ -12,7 +12,7 @@
           </x-ui.button>
 
           <x-modal name="filter-properties">
-            <form method="GET" action="{{ route('tenants.properties.index') }}" class="grid gap-4">
+            <form method="GET" action="{{ route('properties.index') }}" class="grid gap-4">
               <div>
                 <x-ui.label for="query" value="Search property" />
                 <x-ui.input id="query" name="query" type="search" placeholder="Search property"
@@ -80,7 +80,7 @@
           </div>
 
           <div class="flex justify-center">
-            <a href="{{ route('tenants.properties.index') }}">
+            <a href="{{ route('properties.index') }}">
               <x-ui.button>
                 Reset
               </x-ui.button>

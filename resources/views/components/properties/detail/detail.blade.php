@@ -22,22 +22,22 @@
 
   <div class="grid grid-cols-3 border-y border-zinc-200">
     <div class="flex items-center justify-center p-4 border-r border-zinc-200">
-      <a href="{{ route('tenants.properties.show', $property) }}"
-        class="@if (request()->routeIs('tenants.properties.show', $property)) text-primary-500 @endif">
+      <a href="{{ route('properties.show', $property) }}"
+        class="@if (request()->routeIs('properties.show', $property)) text-primary-500 @endif">
         <span> Detail</span>
       </a>
     </div>
 
     <div class="flex items-center justify-center p-4 border-r border-zinc-200">
-      <a href="{{ route('tenants.properties.rooms', $property) }}"
-        class="@if (request()->routeIs('tenants.properties.rooms', $property)) text-primary-500 @endif">
+      <a href="{{ route('properties.rooms', $property) }}"
+        class="@if (request()->routeIs('properties.rooms', $property)) text-primary-500 @endif">
         <span>Rooms</span>
       </a>
     </div>
 
     <div class="flex items-center justify-center p-4 border-r border-zinc-200">
-      <a href="{{ route('tenants.properties.review', $property) }}"
-        class="@if (request()->routeIs('tenants.properties.review', $property)) text-primary-500 @endif">
+      <a href="{{ route('properties.reviews', $property) }}"
+        class="@if (request()->routeIs('properties.reviews', $property)) text-primary-500 @endif">
         <span> Review</span>
       </a>
     </div>

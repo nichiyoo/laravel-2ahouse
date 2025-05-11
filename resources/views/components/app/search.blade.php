@@ -4,7 +4,7 @@
   ]);
 @endphp
 
-<form method="GET" action="{{ route('tenants.properties.index') }}" {{ $props }}>
+<form method="GET" action="{{ route('properties.index') }}" {{ $props }}>
   <div class="flex flex-col gap-2">
     <x-ui.label for="query" value="Search property" class="sr-only" />
 

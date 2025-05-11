@@ -16,15 +16,9 @@ Route::middleware('auth', 'role:tenant', 'completed')
       ->prefix('properties')
       ->as('properties.')
       ->group(function () {
-        Route::get('', 'index')->name('index');
-        Route::get('{property}', 'show')->name('show');
-        Route::get('{property}/map', 'map')->name('map');
         Route::get('{property}/rent', 'rent')->name('rent');
-        Route::get('{property}/rooms', 'rooms')->name('rooms');
-        Route::get('{property}/review', 'review')->name('review');
-
-        Route::post('{property}/bookmark', 'bookmark')->name('bookmark');
         Route::post('{property}/rent', 'reserve')->name('reserve');
+        Route::post('{property}/bookmark', 'bookmark')->name('bookmark');
       });
 
     Route::controller(BookmarkController::class)

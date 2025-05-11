@@ -2,7 +2,7 @@
   <x-slot:action>
     <nav class="fixed bottom-0 w-full max-w-md">
       <div class="grid grid-cols-2 border-t border-zinc-200 bg-zinc-50">
-        <a href="{{ route('tenants.properties.show', $property) }}" class="p-4">
+        <a href="{{ route('properties.show', $property) }}" class="p-4">
           <x-ui.button variant="secondary">
             <i data-lucide="arrow-left" class="size-5"></i>
             <span>Back</span>
