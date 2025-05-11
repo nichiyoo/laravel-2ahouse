@@ -19,11 +19,13 @@ class AppController extends Controller
 
     switch ($role) {
       case RoleType::TENANT:
-        return redirect()->route('tenants.app');
+        return redirect()->route('tenants.dashboard');
 
       case RoleType::LANDLORD:
+        return redirect()->route('landlords.dashboard');
+
       case RoleType::ADMIN:
-        return redirect()->route('tenants.app');
+        return redirect()->route('tenants.dashboard');
 
       default:
         return redirect()->route('onboard');
@@ -36,5 +38,16 @@ class AppController extends Controller
   public function config(): View
   {
     return view('config');
+  }
+
+
+  /**
+   * Display the activity page.
+   * 
+   * @return \Illuminate\Contracts\View\View
+   */
+  public function activity()
+  {
+    return view('activity');
   }
 }

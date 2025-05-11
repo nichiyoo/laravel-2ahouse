@@ -17,7 +17,7 @@ class TenantController extends Controller
    * 
    * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
    */
-  public function app(): View | RedirectResponse
+  public function dashboard(): View | RedirectResponse
   {
     $user = Auth::user();
     $tenant = $user->tenant;
@@ -36,7 +36,7 @@ class TenantController extends Controller
 
     $others = $properties->whereNotIn('id', $combinedIds)->take(8)->values();
 
-    return view('tenants.index', [
+    return view('tenants.dashboard', [
       'nearest' => $nearest,
       'latest' => $latest,
       'others' => $others,
@@ -75,16 +75,6 @@ class TenantController extends Controller
       'lat' => $lat,
       'lng' => $lng,
     ]);
-  }
-
-  /**
-   * Display the activity page.
-   * 
-   * @return \Illuminate\Contracts\View\View
-   */
-  public function activity()
-  {
-    return view('tenants.activity');
   }
 
   /**

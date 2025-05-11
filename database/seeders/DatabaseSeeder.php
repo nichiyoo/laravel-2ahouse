@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         'email' => 'landlord@example.com',
         'role' => RoleType::LANDLORD,
       ])->id,
+      'completed' => true,
     ]);
 
     Tenant::factory()->create([

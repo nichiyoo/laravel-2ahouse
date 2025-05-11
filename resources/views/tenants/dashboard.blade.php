@@ -15,6 +15,7 @@
       <h1 class="text-2xl font-semibold px-content">
         Nearest properties
       </h1>
+
       <x-properties.slides class="px-content" :properties="$nearest" />
     </section>
 
@@ -37,6 +38,7 @@
           <i data-lucide="arrow-up-right" class="size-4"></i>
         </a>
       </div>
+
       @foreach ($others as $property)
         <x-properties.card :property="$property" />
       @endforeach

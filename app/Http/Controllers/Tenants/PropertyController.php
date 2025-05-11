@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tenants;
 
-use App\Helpers\Distance;
+use App\Http\Controllers\Controller;
 use App\Models\Property;
 use App\Models\Bookmark;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyController extends Controller
 {
@@ -46,7 +46,6 @@ class PropertyController extends Controller
       });
 
     if ($rating) $query->having('rating', '>=', $rating);
-
     $properties = $query->get();
 
     if ($distance) {
@@ -62,22 +61,6 @@ class PropertyController extends Controller
     return view('tenants.properties.index', [
       'properties' => $properties,
     ]);
-  }
-
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
-    //
-  }
-
-  /**
-   * Store a newly created resource in storage.
-   */
-  public function store(Request $request)
-  {
-    //
   }
 
   /**
@@ -185,30 +168,5 @@ class PropertyController extends Controller
     return view('tenants.properties.rent', [
       'property' => $property,
     ]);
-  }
-
-
-  /**
-   * Show the form for editing the specified resource.
-   */
-  public function edit(Property $property)
-  {
-    //
-  }
-
-  /**
-   * Update the specified resource in storage.
-   */
-  public function update(Request $request, Property $property)
-  {
-    //
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   */
-  public function destroy(Property $property)
-  {
-    //
   }
 }
