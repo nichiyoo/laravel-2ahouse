@@ -38,11 +38,6 @@
       <dd>{{ $room->capacity }}</dd>
     </dl>
 
-    <dl class="flex flex-col gap-2">
-      <dt class="font-medium">Payment</dt>
-      <dd>{{ $room->payment->label() }}</dd>
-    </dl>
-
     <dl class="flex flex-col gap-2 col-span-full">
       <dt class="font-medium">Amenities</dt>
 

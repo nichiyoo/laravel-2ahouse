@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\AmenitiesType;
-use App\Enums\PaymentType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,7 +28,6 @@ class RoomFactory extends Factory
         asset('images/placeholders/rooms/rooms-2.jpg'),
         asset('images/placeholders/rooms/rooms-3.jpg'),
       ],
-      'payment' => fake()->randomElement(PaymentType::class),
       'amenities' => fake()->randomElements(AmenitiesType::class, fake()->numberBetween(3, 8)),
     ];
   }

@@ -26,89 +26,63 @@ class DatabaseSeeder extends Seeder
     ]);
 
     Landlord::factory()->create([
+      'completed' => true,
       'user_id' => User::factory()->create([
         'name' => 'Landlord',
         'email' => 'landlord@example.com',
         'role' => RoleType::LANDLORD,
       ])->id,
-      'completed' => true,
     ]);
 
     Tenant::factory()->create([
+      'completed' => true,
       'user_id' => User::factory()->create([
         'name' => 'Tenant',
         'email' => 'tenant@example.com',
         'role' => RoleType::TENANT,
       ])->id,
-      'completed' => true,
     ]);
 
     User::factory()->count(20)->create([
       'role' => RoleType::TENANT,
-    ]);
+    ])->each(function ($user) {
+      Tenant::factory()->create([
+        'user_id' => $user->id,
+        'completed' => true,
+      ]);
+    });
 
     User::factory()->count(10)->create([
       'role' => RoleType::LANDLORD,
-    ]);
+    ])->each(function ($user) {
+      Landlord::factory()->create([
+        'user_id' => $user->id,
+        'completed' => true,
+      ]);
+    });
 
-    $users = User::whereIn('role', [
-      RoleType::LANDLORD,
-      RoleType::TENANT
-    ])
-      ->where(function ($query) {
-        $query->where('role', RoleType::TENANT)->whereDoesntHave('tenant', function ($query) {
-          $query->where('completed', true);
-        });
-      })
-      ->orWhere(function ($query) {
-        $query->where('role', RoleType::LANDLORD)->whereDoesntHave('landlord', function ($query) {
-          $query->where('completed', true);
-        });
-      })
-      ->get();
-
-    foreach ($users as $user) {
-      switch ($user->role) {
-        case RoleType::LANDLORD:
-          Landlord::factory()->create([
-            'user_id' => $user->id,
-            'completed' => true,
-          ]);
-          break;
-
-        case RoleType::TENANT:
-          Tenant::factory()->create(['user_id' => $user->id]);
-          break;
-      }
-    }
-
-    $landlords = Landlord::with('user')->get();
-
-    foreach ($landlords as $landlord) {
-      $count = $landlord->user->email === 'landlord@example.com' ? 8 : rand(1, 3);
-
+    Landlord::with('user')->get()->each(function ($landlord) {
+      $count = rand(1, 3);
       Property::factory()->count($count)->create([
         'landlord_id' => $landlord->id,
       ]);
-    }
+    });
 
-    $properties = Property::get();
-    foreach ($properties as $property) {
-      Room::factory()->count(rand(1, 3))->create([
+    Property::get()->each(function ($property) {
+      $count = rand(1, 3);
+      Room::factory()->count($count)->create([
         'property_id' => $property->id,
       ]);
-    }
+    });
 
-    $rooms = Room::get();
-    foreach ($rooms as $room) {
+    Room::get()->each(function ($room) {
       $count = rand(1, 3);
-
-      foreach (Tenant::inRandomOrder()->take($count)->get() as $tenant) {
+      Tenant::inRandomOrder()->take($count)->get()->each(function ($tenant) use ($room) {
         Review::factory()->create([
           'room_id' => $room->id,
           'tenant_id' => $tenant->id,
         ]);
-      }
-    }
+      });
+    });
   }
 }

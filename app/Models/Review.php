@@ -34,12 +34,12 @@ class Review extends Model
   }
 
   /**
-   * Get the room associated with the review.
+   * Get the property associated with the review.
    *
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
    */
-  public function room(): BelongsTo
+  public function property(): BelongsTo
   {
-    return $this->belongsTo(Room::class);
+    return $this->belongsTo(Property::class);
   }
 }

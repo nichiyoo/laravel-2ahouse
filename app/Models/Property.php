@@ -2,35 +2,16 @@
 
 namespace App\Models;
 
-use App\Enums\RoleType;
 use App\Helpers\Distance;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-
-class PriceAndRatingScope implements Scope
-{
-  /**
-   * Apply the scope to a given Eloquent query builder.
-   *
-   * @param  \Illuminate\Database\Eloquent\Builder  $builder
-   * @param  \Illuminate\Database\Eloquent\Model  $model
-   * @return void
-   */
-  public function apply(Builder $builder, Model $model)
-  {
-    $builder->withAvg('reviews as rating', 'rating')
-      ->withMin('rooms as min_price', 'price')
-      ->withMax('rooms as max_price', 'price')
-      ->groupBy('properties.id');
-  }
-}
 
 class Property extends Model
 {
@@ -44,7 +25,15 @@ class Property extends Model
    */
   protected static function booted()
   {
-    static::addGlobalScope(new PriceAndRatingScope);
+    static::addGlobalScope('price', function (Builder $builder) {
+      $builder->withAvg('rooms as min_price', 'price')
+        ->withAvg('rooms as max_price', 'price')
+        ->groupBy('properties.id');
+    });
+
+    static::addGlobalScope('rating', function (Builder $builder) {
+      $builder->withAvg('reviews as rating', 'rating');
+    });
   }
 
   /**
@@ -75,6 +64,14 @@ class Property extends Model
     'longitude' => 'decimal:6',
   ];
 
+  /**
+   * The relationships that should be eager loaded on every query.
+   *
+   * @var array<string, string>
+   */
+  protected $with = [
+    'bookmarks',
+  ];
 
   /**
    * Get the landlord associated with the property.
@@ -119,26 +116,12 @@ class Property extends Model
   /**
    * Get the bookmarks associated with the room.
    *
-   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
    */
-  public function bookmarks(): HasMany
+  public function bookmarks(): BelongsToMany
   {
-    return $this->hasMany(Bookmark::class);
-  }
-
-  /**
-   * Get the bookmarks associated with the room.
-   *
-   * @return \Illuminate\Database\Eloquent\Relations\HasMany
-   */
-  public function saves(): HasMany
-  {
-    $user = Auth::user();
-    if (!$user) return $this->hasMany(Bookmark::class);
-    if ($user->role !== RoleType::TENANT) return $this->hasMany(Bookmark::class);
-
-    return $this->hasMany(Bookmark::class)
-      ->where('tenant_id', $user->tenant->id);
+    return $this->BelongsToMany(Tenant::class, Bookmark::class)
+      ->withTimestamps();
   }
 
   /**
@@ -165,15 +148,14 @@ class Property extends Model
   }
 
   /**
-   * Getter for the bookmarked property.
+   * Getter for the rating property.
    *
-   * @return bool
+   * @return float
    */
   public function getBookmarkedAttribute(): bool
   {
-    return $this->relationLoaded('saves')
-      ? $this->saves->isNotEmpty()
-      : false;
+    $loaded = $this->relationLoaded('bookmarks');
+    return $loaded && $this->bookmarks->contains('id', Auth::user()->tenant->id);
   }
 
   /**
@@ -181,13 +163,11 @@ class Property extends Model
    *
    * @return float
    */
-  public function getDistanceAttribute(): float | null
+  public function getDistanceAttribute(): float
   {
-    $user = Auth::user();
-    $tenant = $user->tenant;
+    $tenant = Auth::user()->tenant;
 
-    if (!$tenant) return null;
-
+    if (!$tenant) return 0;
     return Distance::haversine(
       $tenant->latitude,
       $tenant->longitude,

@@ -18,7 +18,7 @@ class TenantController extends Controller
    */
   public function dashboard(): View | RedirectResponse
   {
-    $properties = Property::with(['landlord.user', 'saves'])
+    $properties = Property::with(['landlord.user'])
       ->hasRooms()
       ->get();
 

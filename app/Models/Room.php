@@ -9,23 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Scope;
-
-class RatingScope implements Scope
-{
-  /**
-   * Apply the scope to a given Eloquent query builder.
-   *
-   * @param  \Illuminate\Database\Eloquent\Builder  $builder
-   * @param  \Illuminate\Database\Eloquent\Model  $model
-   * @return void
-   */
-  public function apply(Builder $builder, Model $model)
-  {
-    $builder->withAvg('reviews as rating', 'rating');
-  }
-}
 
 class Room extends Model
 {
@@ -39,7 +24,9 @@ class Room extends Model
    */
   protected static function booted()
   {
-    static::addGlobalScope(new RatingScope);
+    static::addGlobalScope('rating', function (Builder $builder) {
+      $builder->withAvg('reviews as rating', 'rating');
+    });
   }
 
   /**
@@ -56,6 +43,7 @@ class Room extends Model
     'payment',
     'property_id',
   ];
+
 
   /**
    * Get the attributes that should be cast.
@@ -89,16 +77,18 @@ class Room extends Model
    */
   public function reviews(): HasMany
   {
-    return $this->hasMany(Review::class);
+    return $this->HasMany(Review::class);
   }
 
   /**
    * Get the contracts associated with the room.
    *
-   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
    */
-  public function contracts(): HasMany
+  public function contracts(): BelongsToMany
   {
-    return $this->hasMany(Contract::class);
+    return $this->BelongsToMany(Tenant::class, Contract::class)
+      ->withPivot('start_date', 'end_date', 'payment')
+      ->withTimestamps();
   }
 }

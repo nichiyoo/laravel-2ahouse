@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
-use App\Models\Bookmark;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PropertyController extends Controller
 {
@@ -18,6 +16,8 @@ class PropertyController extends Controller
    */
   public function index(Request $request): View
   {
+    Gate::authorize('viewAny', Property::class);
+
     $keyword = $request->get('query');
     $min = $request->get('price_min');
     $max = $request->get('price_max');
@@ -25,7 +25,7 @@ class PropertyController extends Controller
     $distance = $request->get('distance');
 
     $query = Property::hasRooms()
-      ->with(['landlord.user', 'saves'])
+      ->with(['landlord.user'])
       ->when($keyword, function ($query) use ($keyword) {
         return $query->where(function ($q) use ($keyword) {
           $q->where('name', 'like', '%' . $keyword . '%')
@@ -70,7 +70,8 @@ class PropertyController extends Controller
    */
   public function show(Property $property): View
   {
-    $property->load('landlord.user', 'saves');
+    Gate::authorize('view', $property);
+    $property->load('landlord.user');
 
     return view('properties.show', [
       'property' => $property,
@@ -85,7 +86,8 @@ class PropertyController extends Controller
    */
   public function reviews(Property $property): View
   {
-    $property->load('reviews.tenant.user', 'landlord.user', 'saves');
+    Gate::authorize('view', $property);
+    $property->load('reviews.tenant.user', 'landlord.user');
 
     return view('properties.reviews', [
       'property' => $property,
@@ -100,7 +102,8 @@ class PropertyController extends Controller
    */
   public function rooms(Property $property): View
   {
-    $property->load('landlord.user', 'saves');
+    Gate::authorize('view', $property);
+    $property->load('landlord.user');
 
     return view('properties.rooms', [
       'property' => $property,
@@ -115,8 +118,7 @@ class PropertyController extends Controller
    */
   public function map(Property $property): View
   {
-    $property->load('saves');
-
+    Gate::authorize('view', $property);
     return view('properties.map', [
       'property' => $property,
     ]);

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Tenant extends Model
@@ -38,6 +39,7 @@ class Tenant extends Model
     'completed' => 'boolean',
   ];
 
+
   /**
    * Get the user associated with the tenant.
    *
@@ -51,30 +53,35 @@ class Tenant extends Model
   /**
    * Get the reviews associated with the tenant.
    *
-   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
    */
-  public function reviews(): HasMany
+  public function reviews(): BelongsToMany
   {
-    return $this->hasMany(Review::class);
+    return $this->BelongsToMany(Room::class, Review::class)
+      ->withPivot('rating', 'comment')
+      ->withTimestamps();
   }
 
   /**
    * Get the contracts associated with the tenant.
    *
-   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
    */
-  public function contracts(): HasMany
+  public function contracts(): BelongsToMany
   {
-    return $this->hasMany(Contract::class);
+    return $this->belongsToMany(Room::class, Contract::class)
+      ->withPivot('start_date', 'end_date', 'payment')
+      ->withTimestamps();
   }
 
   /**
    * Get the bookmarks associated with the tenant.
    *
-   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
    */
-  public function bookmarks(): HasMany
+  public function bookmarks(): BelongsToMany
   {
-    return $this->hasMany(Bookmark::class);
+    return $this->belongsToMany(Property::class, Bookmark::class)
+      ->withTimestamps();
   }
 }

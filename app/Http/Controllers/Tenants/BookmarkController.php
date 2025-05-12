@@ -19,7 +19,7 @@ class BookmarkController extends Controller
     $user = Auth::user();
 
     $properties = $user->tenant->bookmarks()
-      ->with('property.landlord.user', 'property.saves')
+      ->with('property.landlord', 'property')
       ->get()
       ->pluck('property');
 

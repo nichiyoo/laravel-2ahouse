@@ -17,8 +17,8 @@ class LandlordController extends Controller
     $landlord = $user->landlord;
 
     $properties = $landlord->properties()
-      ->withCount(['saves'])
-      ->with(['rooms', 'landlord.user'])
+      ->withCount(['reviews'])
+      ->with(['rooms', 'landlord'])
       ->get();
 
     $populars = $properties
@@ -27,8 +27,8 @@ class LandlordController extends Controller
       ->values();
 
     $count = $properties->count();
-    $bookmarked = $properties->sum('saves_count');
     $rating = $properties->sum('rating') / $count;
+    $bookmarked = $properties->sum('reviews_count');
 
     return view('landlords.dashboard', [
       'properties' => $populars,

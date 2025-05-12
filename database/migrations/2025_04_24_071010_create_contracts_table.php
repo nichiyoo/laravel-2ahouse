@@ -21,7 +21,7 @@ return new class extends Migration
       $table->foreignId('room_id')->constrained()->cascadeOnDelete();
       $table->date('start_date')->nullable();
       $table->date('end_date')->nullable();
-      $table->enum('payments', array_map(fn($payment) => $payment->value, $payments))->default(PaymentMethod::CASH->value);
+      $table->enum('payment', array_map(fn($payment) => $payment->value, $payments))->default(PaymentMethod::CASH->value);
     });
   }
 

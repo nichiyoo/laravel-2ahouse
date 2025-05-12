@@ -22,7 +22,7 @@ class Contract extends Model
     'room_id',
     'start_date',
     'end_date',
-    'payments',
+    'payment',
   ];
 
   /**
@@ -35,7 +35,7 @@ class Contract extends Model
     return [
       'start_date' => 'date',
       'end_date' => 'date',
-      'payments' => PaymentMethod::class,
+      'payment' => PaymentMethod::class,
     ];
   }
 
