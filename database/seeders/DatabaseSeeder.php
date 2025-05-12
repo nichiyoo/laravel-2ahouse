@@ -101,12 +101,14 @@ class DatabaseSeeder extends Seeder
 
     $rooms = Room::get();
     foreach ($rooms as $room) {
-      $tenant = Tenant::inRandomOrder()->first();
+      $count = rand(1, 3);
 
-      Review::factory()->count(rand(1, 3))->create([
-        'room_id' => $room->id,
-        'tenant_id' => $tenant->id,
-      ]);
+      foreach (Tenant::inRandomOrder()->take($count)->get() as $tenant) {
+        Review::factory()->create([
+          'room_id' => $room->id,
+          'tenant_id' => $tenant->id,
+        ]);
+      }
     }
   }
 }

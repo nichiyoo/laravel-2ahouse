@@ -47,7 +47,9 @@
       </div>
 
       @foreach ($properties as $property)
-        <x-properties.card :property="$property" />
+        <a href="{{ route('landlords.properties.show', $property) }}">
+          <x-properties.card :property="$property" />
+        </a>
       @endforeach
     </section>
   </div>

@@ -71,7 +71,9 @@
       </h2>
 
       @forelse ($properties as $property)
-        <x-properties.card :property="$property" />
+        <a href="{{ route('properties.show', $property) }}">
+          <x-properties.card :property="$property" />
+        </a>
       @empty
         <div class="flex flex-col justify-center gap-4 h-96">
           <div class="flex items-center justify-center gap-2 text-zinc-500">

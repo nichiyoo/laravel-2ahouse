@@ -16,7 +16,31 @@
         Nearest properties
       </h1>
 
-      <x-properties.slides class="px-content" :properties="$nearest" />
+      <div class="overflow-hidden embla px-content" id="slides">
+        <div class="flex embla__container">
+          @foreach ($nearest as $property)
+            <a href="{{ route('properties.show', $property) }}"
+              class="relative flex-none mr-4 overflow-hidden embla__slide basis-11/12 aspect-thumbnail size-full rounded-2xl content">
+              <img src="{{ $property->image }}" alt="{{ $property->name }}" class="absolute object-cover size-full" />
+              <div class="absolute inset-0 bg-gradient-to-tr from-zinc-950/80 to-transparent"></div>
+
+              <div class="relative flex flex-col justify-end h-full p-6 text-white">
+                <span>Rp {{ number_format($property->min_price) }}</span>
+                <h4 class="text-2xl font-medium truncate">{{ $property->name }}</h4>
+                <p class="text-sm truncate opacity-50">{{ $property->address }}</p>
+              </div>
+
+              <div class="absolute top-0 flex items-center justify-between w-full p-6 text-sm text-white">
+                <div class="flex items-center gap-2 text-yellow-400">
+                  <i data-lucide="star" class="fill-current size-5"></i>
+                  <span>{{ round($property->rating, 1) }}</span>
+                </div>
+                <span>{{ round($property->distance, 1) }} Km</span>
+              </div>
+            </a>
+          @endforeach
+        </div>
+      </div>
     </section>
 
     <section class="grid gap-4">
@@ -24,7 +48,26 @@
         Latest properties
       </h2>
 
-      <x-properties.chips class="px-content" :properties="$latest" />
+      <div class="overflow-hidden embla px-content" id="chips">
+        <div class="flex embla__container">
+          @foreach (collect($latest)->chunk(2) as $chunk)
+            <div class="grid flex-none gap-4 mr-4 basis-3/4 embla__slide">
+              @foreach ($chunk as $property)
+                <a href="{{ route('properties.show', $property) }}"
+                  class="grid items-center grid-cols-3 gap-4 overflow-hidden content rounded-2xl">
+                  <div class="aspect-square">
+                    <img src="{{ $property->image }}" alt="{{ $property->name }}" class="object-cover size-full" />
+                  </div>
+                  <div class="col-span-2 font-medium">
+                    <h4 class="truncate">{{ $property->name }}</h4>
+                    <span class="text-sm text-primary-500">Rp {{ number_format($property->min_price) }}</span>
+                  </div>
+                </a>
+              @endforeach
+            </div>
+          @endforeach
+        </div>
+      </div>
     </section>
 
     <section class="grid gap-4 px-content">
@@ -40,7 +83,9 @@
       </div>
 
       @foreach ($others as $property)
-        <x-properties.card :property="$property" />
+        <a href="{{ route('properties.show', $property) }}">
+          <x-properties.card :property="$property" />
+        </a>
       @endforeach
     </section>
   </div>
