@@ -1,10 +1,16 @@
+@props([
+    'action' => route('properties.index'),
+])
+
 @php
   $props = $attributes->merge([
+      'method' => 'GET',
       'class' => 'w-full',
+      'action' => $action,
   ]);
 @endphp
 
-<form method="GET" action="{{ route('properties.index') }}" {{ $props }}>
+<form {{ $props }}>
   <div class="flex flex-col gap-2">
     <x-ui.label for="query" value="Search property" class="sr-only" />
 

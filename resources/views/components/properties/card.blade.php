@@ -3,8 +3,6 @@
 ])
 
 @php
-  use App\Enums\RoleType;
-
   $props = $attributes->merge([
       'class' => 'content rounded-2xl overflow-hidden',
   ]);
@@ -15,7 +13,7 @@
     <div class="flex items-center justify-between gap-4 p-4">
       <x-properties.detail.profile :user="$property->landlord->user" />
 
-      @if (Auth::user()->role === RoleType::TENANT)
+      @tenant
         <form method="POST" action="{{ route('tenants.properties.bookmark', $property) }}">
           @csrf
           <button size="icon" class="@if ($property->bookmarked) text-primary-500 @endif">
@@ -23,7 +21,7 @@
             <span class="sr-only">Bookmark</span>
           </button>
         </form>
-      @endif
+      @endtenant
     </div>
 
     <div class="relative w-full aspect-video">
@@ -35,9 +33,12 @@
             <i data-lucide="star" class="fill-current size-4"></i>
             <span>{{ round($property->rating, 1) }}</span>
           </div>
-          <div class="px-2 py-1 rounded-full bg-zinc-50">
-            <span>{{ round($property->distance, 1) }} Km</span>
-          </div>
+
+          @tenant
+            <div class="px-2 py-1 rounded-full bg-zinc-50">
+              <span>{{ round($property->distance, 1) }} Km</span>
+            </div>
+          @endtenant
         </div>
       </div>
     </div>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Distance;
-use App\Models\Tenant;
 use App\Models\Property;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
@@ -19,9 +18,6 @@ class TenantController extends Controller
    */
   public function dashboard(): View | RedirectResponse
   {
-    $user = Auth::user();
-    $tenant = $user->tenant;
-
     $properties = Property::with(['landlord.user', 'saves'])
       ->hasRooms()
       ->get();
@@ -29,12 +25,12 @@ class TenantController extends Controller
     $nearest = $properties->sortBy('distance')->take(5)->values();
     $latest = $properties->sortByDesc('updated_at')->take(10)->values();
 
-    $combinedIds = [
+    $combined_ids = [
       ...$latest->pluck('id'),
       ...$nearest->pluck('id'),
     ];
 
-    $others = $properties->whereNotIn('id', $combinedIds)->take(8)->values();
+    $others = $properties->whereNotIn('id', $combined_ids)->take(8)->values();
 
     return view('tenants.dashboard', [
       'nearest' => $nearest,
@@ -69,59 +65,10 @@ class TenantController extends Controller
       return $distance <= $radius;
     })->values();
 
-
     return view('tenants.properties.area', [
       'properties' => $properties,
       'lat' => $lat,
       'lng' => $lng,
     ]);
-  }
-
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
-    //
-  }
-
-  /**
-   * Store a newly created resource in storage.
-   */
-  public function store(Request $request)
-  {
-    //
-  }
-
-  /**
-   * Display the specified resource.
-   */
-  public function show(Tenant $tenant)
-  {
-    //
-  }
-
-  /**
-   * Show the form for editing the specified resource.
-   */
-  public function edit(Tenant $tenant)
-  {
-    //
-  }
-
-  /**
-   * Update the specified resource in storage.
-   */
-  public function update(Request $request, Tenant $tenant)
-  {
-    //
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   */
-  public function destroy(Tenant $tenant)
-  {
-    //
   }
 }

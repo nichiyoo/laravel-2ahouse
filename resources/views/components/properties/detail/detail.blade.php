@@ -7,8 +7,11 @@
       </h1>
       <p class="truncate text-zinc-500">
         <span> {{ $property->address }}</span>
-        <span> - </span>
-        <span> {{ round($property->distance, 1) }} Km</span>
+
+        @tenant
+          <span> - </span>
+          <span> {{ $property->landlord->user->name }}</span>
+        @endtenant
       </p>
     </div>
 

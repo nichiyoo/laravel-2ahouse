@@ -70,7 +70,10 @@ class DatabaseSeeder extends Seeder
     foreach ($users as $user) {
       switch ($user->role) {
         case RoleType::LANDLORD:
-          Landlord::factory()->create(['user_id' => $user->id]);
+          Landlord::factory()->create([
+            'user_id' => $user->id,
+            'completed' => true,
+          ]);
           break;
 
         case RoleType::TENANT:
@@ -80,8 +83,11 @@ class DatabaseSeeder extends Seeder
     }
 
     $landlords = Landlord::with('user')->get();
+
     foreach ($landlords as $landlord) {
-      Property::factory()->count(rand(1, 3))->create([
+      $count = $landlord->user->email === 'landlord@example.com' ? 8 : rand(1, 3);
+
+      Property::factory()->count($count)->create([
         'landlord_id' => $landlord->id,
       ]);
     }
