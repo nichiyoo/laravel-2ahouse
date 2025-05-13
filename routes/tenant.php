@@ -17,6 +17,7 @@ Route::middleware('auth', 'role:tenant', 'completed')
       ->as('properties.')
       ->group(function () {
         Route::get('{property}/rent', 'rent')->name('rent');
+        Route::get('{property}/review', 'review')->name('review');
         Route::post('{property}/rent', 'reserve')->name('reserve');
         Route::post('{property}/bookmark', 'bookmark')->name('bookmark');
       });

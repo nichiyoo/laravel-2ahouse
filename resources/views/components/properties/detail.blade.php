@@ -1,6 +1,20 @@
 @php
   use App\Enums\RoleType;
 
+  $tenant = Auth::user()->role == RoleType::TENANT;
+  $landlord = Auth::user()->role == RoleType::LANDLORD;
+
+  /**
+   * Check if the current route matches the given route.
+   *
+   * @param mixed $route
+   * @return bool
+   */
+  function location(mixed ...$route): bool
+  {
+      return request()->routeIs(...$route);
+  }
+
   $menus = array_to_object([
       [
           'label' => 'Location',
@@ -10,18 +24,32 @@
           'show' => true,
       ],
       [
+          'label' => 'Add review',
+          'icon' => 'plus',
+          'variant' => 'primary',
+          'route' => route('tenants.properties.review', $property),
+          'show' => $tenant && location('properties.reviews', $property),
+      ],
+      [
           'label' => 'Rent',
           'icon' => 'shopping-cart',
           'variant' => 'primary',
           'route' => route('tenants.properties.rent', $property),
-          'show' => Auth::user()->role == RoleType::TENANT,
+          'show' => $tenant && !location('properties.reviews', $property),
+      ],
+      [
+          'label' => 'Add room',
+          'icon' => 'plus',
+          'variant' => 'primary',
+          'route' => route('landlords.properties.rooms.create', $property),
+          'show' => $landlord && location('properties.rooms', $property),
       ],
       [
           'label' => 'Edit',
           'icon' => 'edit-3',
           'variant' => 'primary',
           'route' => route('landlords.properties.edit', $property),
-          'show' => Auth::user()->role == RoleType::LANDLORD,
+          'show' => $landlord && !location('properties.rooms', $property),
       ],
   ]);
 @endphp
@@ -52,6 +80,40 @@
             </x-ui.button>
           </form>
         @endtenant
+
+        @landlord
+          <div>
+            <x-ui.button size="icon" variant="destructive" x-data=""
+              x-on:click.prevent="$dispatch('open-modal', 'delete-property')">
+              <i data-lucide="trash" class="size-4"></i>
+              <span class="sr-only">Delete</span>
+            </x-ui.button>
+          </div>
+
+          <x-modal name="delete-property">
+            <form method="POST" action="{{ route('landlords.properties.destroy', $property) }}" class="grid gap-4">
+              @csrf
+              @method('DELETE')
+
+              <x-ui.header>
+                <x-slot:title>Delete Property</x-slot:title>
+                <x-slot:description>
+                  Are you sure you want to delete {{ $property->name }}? This action cannot be undone,
+                  and all associated rooms, reviews, and bookings will be permanently removed.
+                </x-slot:description>
+              </x-ui.header>
+
+              <div class="grid grid-cols-2 gap-4">
+                <x-ui.button type="button" variant="secondary" x-on:click="$dispatch('close-modal', 'delete-property')">
+                  Cancel
+                </x-ui.button>
+                <x-ui.button type="submit" variant="destructive">
+                  Delete Property
+                </x-ui.button>
+              </div>
+            </form>
+          </x-modal>
+        @endlandlord
       </div>
 
       <x-user :user="$property->landlord->user" status="Owner" />

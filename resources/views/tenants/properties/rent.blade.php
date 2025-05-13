@@ -1,23 +1,4 @@
 <x-app-layout>
-  <x-slot:action>
-    <nav class="fixed bottom-0 w-full max-w-md">
-      <div class="grid grid-cols-2 border-t border-zinc-200 bg-zinc-50">
-        <a href="{{ route('properties.show', $property) }}" class="p-4">
-          <x-ui.button variant="secondary">
-            <i data-lucide="arrow-left" class="size-5"></i>
-            <span>Back</span>
-          </x-ui.button>
-        </a>
-
-        <div class="p-4">
-          <x-ui.button form="rent" type="submit">
-            <span>Submit</span>
-          </x-ui.button>
-        </div>
-      </div>
-    </nav>
-  </x-slot>
-
   <div class="grid gap-6 pb-24 p-content">
     <section class="flex flex-col">
       <span class="text-sm text-zinc-500">Rent a Room</span>
@@ -26,8 +7,7 @@
       </h1>
     </section>
 
-    <form id="rent" method="POST" action="{{ route('tenants.properties.reserve', $property) }}"
-      class="grid gap-6">
+    <form id="rent" method="POST" action="{{ route('tenants.properties.reserve', $property) }}" class="grid gap-6">
       @csrf
 
       <div>
@@ -106,4 +86,24 @@
       </div>
     </form>
   </div>
+
+
+  <x-slot:action>
+    <nav class="fixed bottom-0 w-full max-w-md">
+      <div class="grid grid-cols-2 border-t border-zinc-200 bg-zinc-50">
+        <a href="{{ route('properties.show', $property) }}" class="p-4">
+          <x-ui.button variant="secondary">
+            <i data-lucide="arrow-left" class="size-5"></i>
+            <span>Back</span>
+          </x-ui.button>
+        </a>
+
+        <div class="p-4">
+          <x-ui.button form="rent" type="submit">
+            <span>Submit</span>
+          </x-ui.button>
+        </div>
+      </div>
+    </nav>
+  </x-slot>
 </x-app-layout>

@@ -13,25 +13,24 @@
   </x-ui.button>
 
   <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()">
-    <form method="post" action="{{ route('profile.destroy') }}">
+    <form method="post" action="{{ route('profile.destroy') }}" class="grid gap-4">
       @csrf
       @method('delete')
 
       <x-ui.header>
-        <x-slot:title> Delete Account
-        </x-slot>
+        <x-slot:title>Delete Account</x-slot:title>
         <x-slot:description>
           Once your account is deleted, all of its resources and data will be permanently deleted.
-        </x-slot>
+        </x-slot:description>
       </x-ui.header>
 
-      <div class="mt-6">
+      <div>
         <x-ui.label for="password" value="Password" />
         <x-ui.input id="password" name="password" type="password" placeholder="Enter your password" />
         <x-ui.error :messages="$errors->userDeletion->get('password')" />
       </div>
 
-      <div class="flex justify-end gap-2 mt-6">
+      <div class="flex justify-end gap-2">
         <x-ui.button type="button" variant="secondary" x-on:click="$dispatch('close-modal', 'confirm-user-deletion')">
           Cancel
         </x-ui.button>

@@ -5,7 +5,7 @@
 
 @php
   $props = $attributes->class(['content rounded-t-2xl overflow-hidden w-full', 'transform transition-all'])->merge([
-      'class' => ' px-content py-10  max-w-md mx-auto bg-white',
+      'class' => ' p-content max-w-md mx-auto bg-white',
   ]);
 @endphp
 

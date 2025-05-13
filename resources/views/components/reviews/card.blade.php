@@ -11,7 +11,7 @@
 <div {{ $props }}>
   <x-user :user="$review->tenant->user" status="Renter" />
 
-  <p class="text-sm text-zinc-500">
+  <p class="text-sm text-zinc-500 line-clamp-3">
     {{ $review->comment }}
   </p>
 

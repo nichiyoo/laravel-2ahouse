@@ -1,6 +1,6 @@
 <header class="flex items-center justify-between">
   <div class="flex flex-col gap-2">
-    <h2 class="text-xl font-semibold tracking-tight">
+    <h2 class="text-xl font-semibold tracking-tight text-zinc-900">
       {{ $title }}
     </h2>
 

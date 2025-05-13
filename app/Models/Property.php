@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\Distance;
+use App\Traits\HasImageUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 class Property extends Model
 {
   /** @use HasFactory<\Database\Factories\PropertyFactory> */
-  use HasFactory;
+  use HasFactory, HasImageUpload;
 
   /**
    * The "booted" method of the model.

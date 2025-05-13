@@ -15,9 +15,13 @@
       @for ($i = 1; $i <= $rating; $i++)
         <i data-lucide="star" class="mb-1 fill-current size-4"></i>
       @endfor
+
+      @if ($rating - floor($rating) > 0)
+        <i data-lucide="star" class="fill-current size-4"></i>
+      @endif
     </div>
   @else
-    <i data-lucide="star" class="size-4"></i>
+    <i data-lucide="star" class="fill-current size-4"></i>
   @endif
 
   <span>{{ round($rating, 1) }}</span>

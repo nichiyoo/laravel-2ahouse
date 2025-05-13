@@ -1,15 +1,14 @@
 <x-properties.detail :property="$property">
-  <div class="grid gap-6">
-    @foreach ($property->reviews as $review)
+  <div class="grid items-start gap-6 min-h-80">
+    @forelse ($property->reviews as $review)
       <x-reviews.card :review="$review" />
-    @endforeach
-
-    <a role="button" href="#"
-      class="grid h-40 border border-dashed place-content-center border-zinc-200 rounded-xl">
-      <div class="flex items-center gap-2 text-zinc-500">
-        <i data-lucide="plus" class="size-5"></i>
-        <span class="text-sm">Add Review</span>
+    @empty
+      <div class="flex flex-col justify-center h-56 gap-4 text-sm">
+        <div class="flex items-center justify-center gap-2 text-zinc-500">
+          <span>Oops! No reviews found.</span>
+          <i data-lucide="search" class="size-4"></i>
+        </div>
       </div>
-    </a>
+    @endforelse
   </div>
 </x-properties.detail>
