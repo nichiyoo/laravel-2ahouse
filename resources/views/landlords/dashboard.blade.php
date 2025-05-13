@@ -23,8 +23,8 @@
         </div>
 
         <div class="p-4 content rounded-xl">
-          <h2>Bookmark count</h2>
-          <span class="text-2xl font-bold text-primary-500">{{ $bookmarked }}</span>
+          <h2>Reviews count</h2>
+          <span class="text-2xl font-bold text-primary-500">{{ $reviews }}</span>
         </div>
 
         <div class="p-4 content rounded-xl">

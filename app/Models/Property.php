@@ -27,8 +27,8 @@ class Property extends Model
   protected static function booted()
   {
     static::addGlobalScope('price', function (Builder $builder) {
-      $builder->withAvg('rooms as min_price', 'price')
-        ->withAvg('rooms as max_price', 'price')
+      $builder->withMin('rooms as min_price', 'price')
+        ->withMax('rooms as max_price', 'price')
         ->groupBy('properties.id');
     });
 
@@ -151,7 +151,7 @@ class Property extends Model
   /**
    * Getter for the rating property.
    *
-   * @return float
+   * @return bool
    */
   public function getBookmarkedAttribute(): bool
   {

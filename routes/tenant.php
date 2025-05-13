@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Tenant\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\Tenants\BookmarkController;
@@ -28,4 +29,10 @@ Route::middleware('auth', 'role:tenant', 'completed')
       ->group(function () {
         Route::get('', 'index')->name('index');
       });
+
+    Route::resource('reviews', ReviewController::class)
+      ->except([
+        'index',
+        'show'
+      ]);
   });

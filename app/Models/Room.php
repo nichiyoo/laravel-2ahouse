@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\AmenitiesType;
 use App\Enums\PaymentType;
+use App\Traits\HasMultipleImageUpload;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Room extends Model
 {
   /** @use HasFactory<\Database\Factories\RoomFactory> */
-  use HasFactory;
+  use HasFactory, HasMultipleImageUpload;
 
   /**
    * The "booted" method of the model.
@@ -55,7 +56,6 @@ class Room extends Model
     return [
       'price' => 'decimal:2',
       'images' => 'array',
-      'payment' => PaymentType::class,
       'amenities' => AsEnumCollection::of(AmenitiesType::class),
     ];
   }

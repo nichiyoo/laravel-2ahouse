@@ -28,11 +28,11 @@ class LandlordController extends Controller
 
     $count = $properties->count();
     $rating = $properties->sum('rating') / $count;
-    $bookmarked = $properties->sum('reviews_count');
+    $reviews = $properties->sum('reviews_count');
 
     return view('landlords.dashboard', [
       'properties' => $populars,
-      'bookmarked' => $bookmarked,
+      'reviews' => $reviews,
       'count' => $count,
       'rating' => $rating,
     ]);

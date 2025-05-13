@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
     });
 
     Property::get()->each(function ($property) {
-      $count = rand(1, 3);
+      $count = rand(2, 4);
       Room::factory()->count($count)->create([
         'property_id' => $property->id,
       ]);

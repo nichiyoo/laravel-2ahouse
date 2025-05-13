@@ -38,6 +38,27 @@
       <dd>{{ $room->capacity }}</dd>
     </dl>
 
+    @landlord
+      <dl class="flex flex-col gap-2 col-span-full">
+        <dt class="font-medium">Actions</dt>
+
+        <div class="flex items-center gap-2">
+          <a href="{{ route('landlords.rooms.edit', $room) }}">
+            <x-ui.button variant="secondary">
+              <span>Edit</span>
+            </x-ui.button>
+          </a>
+
+          <x-ui.delete id="{{ $room->id }}" title="{{ $room->type }}"
+            route="{{ route('landlords.rooms.destroy', $room) }}" class="inline-block">
+            <x-ui.button variant="destructive">
+              <span>Delete</span>
+            </x-ui.button>
+          </x-ui.delete>
+        </div>
+      </dl>
+    @endlandlord
+
     <dl class="flex flex-col gap-2 col-span-full">
       <dt class="font-medium">Amenities</dt>
 

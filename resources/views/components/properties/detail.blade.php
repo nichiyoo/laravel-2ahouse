@@ -82,37 +82,13 @@
         @endtenant
 
         @landlord
-          <div>
-            <x-ui.button size="icon" variant="destructive" x-data=""
-              x-on:click.prevent="$dispatch('open-modal', 'delete-property')">
+          <x-ui.delete id="{{ $property->id }}" title="{{ $property->name }}"
+            route="{{ route('landlords.properties.destroy', $property) }}">
+            <x-ui.button size="icon" variant="destructive">
               <i data-lucide="trash" class="size-4"></i>
               <span class="sr-only">Delete</span>
             </x-ui.button>
-          </div>
-
-          <x-modal name="delete-property">
-            <form method="POST" action="{{ route('landlords.properties.destroy', $property) }}" class="grid gap-4">
-              @csrf
-              @method('DELETE')
-
-              <x-ui.header>
-                <x-slot:title>Delete Property</x-slot:title>
-                <x-slot:description>
-                  Are you sure you want to delete {{ $property->name }}? This action cannot be undone,
-                  and all associated rooms, reviews, and bookings will be permanently removed.
-                </x-slot:description>
-              </x-ui.header>
-
-              <div class="grid grid-cols-2 gap-4">
-                <x-ui.button type="button" variant="secondary" x-on:click="$dispatch('close-modal', 'delete-property')">
-                  Cancel
-                </x-ui.button>
-                <x-ui.button type="submit" variant="destructive">
-                  Delete Property
-                </x-ui.button>
-              </div>
-            </form>
-          </x-modal>
+          </x-ui.delete>
         @endlandlord
       </div>
 
