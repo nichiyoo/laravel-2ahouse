@@ -29,6 +29,7 @@ class UpdateRoomRequest extends FormRequest
       'price' => ['required', 'numeric', 'min:0'],
       'amenities' => ['array'],
       'amenities.*' => ['string', new Enum(AmenitiesType::class)],
+      'images' => ['array'],
       'images.*' => ['image', 'max:2048'],
     ];
   }

@@ -61,7 +61,6 @@
           return;
         }
 
-        this.name = file.name;
         const reader = new FileReader();
         reader.onload = (e) => {
           this.preview = e.target.result;

@@ -13,7 +13,6 @@
 
   <div class="grid grid-cols-3 gap-4">
     @foreach ($room->images as $image)
-      @break($loop->iteration > 3)
       <div class="overflow-hidden aspect-square rounded-xl">
         <img src="{{ $image }}" alt="{{ $room->type }}" class="object-cover size-full" />
       </div>

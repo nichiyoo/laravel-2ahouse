@@ -20,18 +20,17 @@ trait HasMultipleImageUpload
     $valid = $request->hasFile($field);
     if (!$valid) return;
 
+    $this->deleteImages($field);
+
     $files = $request->file($field);
     $paths = [];
 
     foreach ($files as $file) {
-      if ($file->isValid()) {
-        $path = $file->store('uploads', 'public');
-        $paths[] = asset($path);
-      }
+      $path = $file->store('uploads', 'public');
+      $paths[] = asset($path);
     }
 
-    $current = $this->{$field} ?? [];
-    $this->{$field} = array_merge($current, $paths);
+    $this->{$field} = $paths;
   }
 
   /**

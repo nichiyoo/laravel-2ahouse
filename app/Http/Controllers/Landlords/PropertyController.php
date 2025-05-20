@@ -45,7 +45,7 @@ class PropertyController extends Controller
    */
   public function store(StorePropertyRequest $request): RedirectResponse
   {
-    $validated = $request->validated();
+    $validated = $request->except('image');
 
     $property = Property::create([
       ...$validated,
@@ -83,7 +83,7 @@ class PropertyController extends Controller
   public function update(UpdatePropertyRequest $request, Property $property): RedirectResponse
   {
     Gate::authorize('update', $property);
-    $validated = $request->validated();
+    $validated = $request->except('image');
 
     $property->update($validated);
     $property->storeImage($request);

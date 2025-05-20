@@ -9,6 +9,7 @@ use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use App\Models\Property;
 use App\Models\Room;
+use Illuminate\Support\Facades\Gate;
 
 class RoomController extends Controller
 {
@@ -32,7 +33,7 @@ class RoomController extends Controller
    */
   public function store(StoreRoomRequest $request, Property $property)
   {
-    $validated = $request->validated();
+    $validated = $request->except('images');
 
     $room = Room::create([
       ...$validated,
@@ -52,6 +53,8 @@ class RoomController extends Controller
    */
   public function edit(Room $room)
   {
+    Gate::authorize('update', $room);
+
     $property = $room->property;
 
     return view('landlords.rooms.edit', [
@@ -67,7 +70,8 @@ class RoomController extends Controller
    */
   public function update(UpdateRoomRequest $request, Room $room)
   {
-    $validated = $request->validated();
+    Gate::authorize('update', $room);
+    $validated = $request->except('images');
 
     $room->update($validated);
     $room->storeImages($request);
@@ -84,6 +88,7 @@ class RoomController extends Controller
    */
   public function destroy(Room $room)
   {
+    Gate::authorize('delete', $room);
     $room->deleteImages();
     $room->delete();
 

@@ -144,11 +144,10 @@
     </section>
 
     <x-slot:action>
-      <nav class="grid w-full grid-cols-2 border-t border-zinc-200 bg-zinc-50">
+      <nav class="grid w-full grid-cols-2 gap-4 p-4 border-t border-zinc-200 bg-zinc-50">
         @foreach ($menus as $menu)
           @continue (!$menu->show)
-
-          <a href="{{ $menu->route }}" class="p-4">
+          <a href="{{ $menu->route }}">
             <x-ui.button variant="{{ $menu->variant }}">
               <i data-lucide="{{ $menu->icon }}" class="size-5"></i>
               <span>{{ $menu->label }}</span>

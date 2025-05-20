@@ -1,30 +1,30 @@
 <div>
   <x-ui.label for="type" value="Room Type" />
   <x-ui.input id="type" type="text" name="type" value="{{ old('type', $room->type ?? '') }}" required
-    placeholder="Enter room type (e.g., Single, Double, Suite)" autofocus />
+    placeholder="Enter room name" autofocus />
   <x-ui.error :messages="$errors->get('type')" />
 </div>
 
 <div>
   <x-ui.label for="capacity" value="Capacity" />
   <x-ui.input id="capacity" type="number" name="capacity" value="{{ old('capacity', $room->capacity ?? '') }}" required
-    placeholder="Maximum occupancy" min="1" />
+    placeholder="Number of available room" min="0" />
   <x-ui.error :messages="$errors->get('capacity')" />
 </div>
 
 <div>
   <x-ui.label for="price" value="Price per Month (Rp)" />
   <x-ui.input id="price" type="number" name="price" value="{{ old('price', $room->price ?? '') }}" required
-    placeholder="Monthly rental price" min="0" step="1000" />
+    placeholder="Monthly rental price" min="0" step="100000" />
   <x-ui.error :messages="$errors->get('price')" />
 </div>
 
 <div>
   <x-ui.label for="images" value="Room Images" />
   @isset($room->images)
-    <x-ui.multiple name="images[]" :value="old('images', $room->images ?? [])" placeholder="Add Room Image" multiple />
+    <x-ui.multiple name="images" :value="old('images', $room->images)" placeholder="Change images" multiple />
   @else
-    <x-ui.multiple name="images[]" placeholder="Add Room Image" multiple required />
+    <x-ui.multiple name="images" placeholder="Change images" multiple />
   @endisset
   <x-ui.error :messages="$errors->get('images')" />
 </div>
@@ -34,7 +34,7 @@
   <div class="grid grid-cols-2 gap-3 mt-2">
     @foreach ($amenities as $amenity)
       @php
-        $actives = $room->amenities->pluck('value')->toArray() ?? [];
+        $actives = isset($room) ? $room->amenities->pluck('value')->toArray() : [];
         $checked = in_array($amenity->value, old('amenities', $actives));
       @endphp
 

@@ -27,11 +27,10 @@ class StoreRoomRequest extends FormRequest
       'type' => ['required', 'string', 'max:255'],
       'capacity' => ['required', 'integer', 'min:1'],
       'price' => ['required', 'numeric', 'min:0'],
-      'property_id' => ['required', 'exists:properties,id'],
       'amenities' => ['array'],
       'amenities.*' => ['string', new Enum(AmenitiesType::class)],
-      'images.*' => ['image', 'max:2048'],
       'images' => ['required', 'array', 'min:1'],
+      'images.*' => ['image', 'max:2048'],
     ];
   }
 }

@@ -15,19 +15,17 @@
 
   <x-slot:action>
     <nav class="fixed bottom-0 w-full max-w-md">
-      <div class="grid grid-cols-2 border-t border-zinc-200 bg-zinc-50">
-        <a href="{{ route('properties.rooms', $property) }}" class="p-4">
+      <div class="grid grid-cols-2 gap-4 p-4 border-t border-zinc-200 bg-zinc-50">
+        <a href="{{ route('properties.rooms', $property) }}">
           <x-ui.button variant="secondary">
             <i data-lucide="arrow-left" class="size-5"></i>
             <span>Back</span>
           </x-ui.button>
         </a>
 
-        <div class="p-4">
-          <x-ui.button form="form" type="submit">
-            <span>Update Room</span>
-          </x-ui.button>
-        </div>
+        <x-ui.button form="form" type="submit">
+          <span>Update Room</span>
+        </x-ui.button>
       </div>
     </nav>
   </x-slot>
